@@ -1,0 +1,142 @@
+<%= form_with(model: employee, local: true) do |form| %>
+  <% if employee.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(employee.errors.count, "error") %> prohibited this employee from being saved:</h2>
+
+      <ul>
+      <% employee.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :dni %>
+    <%= form.text_field :dni, id: :employee_dni %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ape_pat %>
+    <%= form.text_field :ape_pat, id: :employee_ape_pat %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ape_mat %>
+    <%= form.text_field :ape_mat, id: :employee_ape_mat %>
+  </div>
+
+  <div class="field">
+    <%= form.label :nombres %>
+    <%= form.text_field :nombres, id: :employee_nombres %>
+  </div>
+
+  <div class="field">
+    <%= form.label :direccion %>
+    <%= form.text_field :direccion, id: :employee_direccion %>
+  </div>
+
+  <div class="field">
+    <%= form.label :telefono %>
+    <%= form.text_field :telefono, id: :employee_telefono %>
+  </div>
+
+  <div class="field">
+    <%= form.label :correo %>
+    <%= form.text_field :correo, id: :employee_correo %>
+  </div>
+
+  <div class="field">
+    <%= form.label :fec_nacimiento %>
+    <%= form.date_select :fec_nacimiento, id: :employee_fec_nacimiento %>
+  </div>
+
+  <div class="field">
+    <%= form.label :estado %>
+    <%= form.number_field :estado, id: :employee_estado %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tip_tra %>
+    <%= form.number_field :tip_tra, id: :employee_tip_tra %>
+  </div>
+
+  <div class="field">
+    <%= form.label :esta_civil %>
+    <%= form.number_field :esta_civil, id: :employee_esta_civil %>
+  </div>
+
+  <div class="field">
+    <%= form.label :afp %>
+    <%= form.number_field :afp, id: :employee_afp %>
+  </div>
+
+  <div class="field">
+    <%= form.label :admin_user_id %>
+    <%= form.text_field :admin_user_id, id: :employee_admin_user_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :foto %>
+    <%= form.text_field :foto, id: :employee_foto %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ape_nom %>
+    <%= form.text_field :ape_nom, id: :employee_ape_nom %>
+  </div>
+
+  <div class="field">
+    <%= form.label :correo_corp %>
+    <%= form.text_field :correo_corp, id: :employee_correo_corp %>
+  </div>
+
+  <div class="field">
+    <%= form.label :fec_inicon %>
+    <%= form.date_select :fec_inicon, id: :employee_fec_inicon %>
+  </div>
+
+  <div class="field">
+    <%= form.label :fec_tercon %>
+    <%= form.date_select :fec_tercon, id: :employee_fec_tercon %>
+  </div>
+
+  <div class="field">
+    <%= form.label :grado %>
+    <%= form.text_field :grado, id: :employee_grado %>
+  </div>
+
+  <div class="field">
+    <%= form.label :cargo %>
+    <%= form.text_field :cargo, id: :employee_cargo %>
+  </div>
+
+  <div class="field">
+    <%= form.label :area %>
+    <%= form.number_field :area, id: :employee_area %>
+  </div>
+
+  <div class="field">
+    <%= form.label :sele %>
+    <%= form.number_field :sele, id: :employee_sele %>
+  </div>
+
+  <div class="field">
+    <%= form.label :remuneracion %>
+    <%= form.text_field :remuneracion, id: :employee_remuneracion %>
+  </div>
+
+  <div class="field">
+    <%= form.label :sele2 %>
+    <%= form.number_field :sele2, id: :employee_sele2 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :distrito %>
+    <%= form.text_field :distrito, id: :employee_distrito %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
