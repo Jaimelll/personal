@@ -65,6 +65,12 @@ ActiveAdmin.register Employee do
             emple.grado
           end
 
+          column("Foto") do   |emple|
+                  unless emple.foto.blank?
+                   li   image_tag emple.foto.thumb.url, size: "100"
+                  end
+                end
+
 
 
            actions
@@ -94,7 +100,9 @@ ActiveAdmin.register Employee do
 
          f.input :sele,:label => 'Nivel', :input_html => { :style =>  'width:30%'}
          f.input :remuneracion,:as =>:string, :input_html => { :style =>  'width:30%'}
-
+         f.input :foto, :as => :file, :hint => f.object.foto.present? \
+                      ? image_tag(f.object.foto.url(:thumb))
+                       : content_tag(:span, "no hay foto aun")
 
          f.input :admin_user_id, :input_html => { :value => current_admin_user.id }, :as => :hidden
 
@@ -153,7 +161,7 @@ ActiveAdmin.register Employee do
              row 'Término de contrato' do |emple|
                emple.fec_tercon
              end
-            
+
              row 'Nivel' do |emple|
                emple.sele
              end
