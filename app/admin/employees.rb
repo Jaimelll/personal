@@ -145,15 +145,7 @@ ActiveAdmin.register Employee do
               row 'Fecha de nacimiento' do |emple|
                 emple.fec_nacimiento
               end
-              row :esta_civil do |emple|
-                        if emple.esta_civil and emple.esta_civil>0 then
-
-                           Formula.where(product_id:24, orden:emple.esta_civil).
-                                            select('nombre as dd').first.dd
-
-
-                          end
-            end
+              row :esta_civil
              row 'Fecha de ingreso' do |emple|
                emple.fec_inicon
              end
