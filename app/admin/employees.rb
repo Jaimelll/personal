@@ -17,7 +17,7 @@ ActiveAdmin.register Employee do
 
 
          scope :Activos, :default => true do |emples|
-                   emples.where(estado:1)
+                   emples.where(estado:1,correo_corp:current_admin_user.email)
               end
 
         scope :CAS, :default => true do |emples|
