@@ -12,38 +12,35 @@
 
 ActiveRecord::Schema.define(version: 20171017220714) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
     t.string "resource_type"
-    t.bigint "resource_id"
+    t.integer "resource_id", limit: 19, precision: 19
     t.string "author_type"
-    t.bigint "author_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
-    t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
-    t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
+    t.integer "author_id", limit: 19, precision: 19
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["author_type", "author_id"], name: "i_act_adm_com_aut_typ_aut_id"
+    t.index ["namespace"], name: "i_act_adm_com_nam"
+    t.index ["resource_type", "resource_id"], name: "i_act_adm_com_res_typ_res_id"
   end
 
   create_table "admin_users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.inet "current_sign_in_ip"
-    t.inet "last_sign_in_ip"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "reset_password_sent_at", precision: 6
+    t.datetime "remember_created_at", precision: 6
+    t.integer "sign_in_count", precision: 38, default: 0, null: false
+    t.datetime "current_sign_in_at", precision: 6
+    t.datetime "last_sign_in_at", precision: 6
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_admin_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+    t.index ["reset_password_token"], name: "i_adm_use_res_pas_tok", unique: true
   end
 
   create_table "employees", force: :cascade do |t|
@@ -55,11 +52,11 @@ ActiveRecord::Schema.define(version: 20171017220714) do
     t.string "telefono"
     t.string "correo"
     t.date "fec_nacimiento"
-    t.integer "estado"
-    t.integer "tip_tra"
-    t.integer "esta_civil"
-    t.integer "afp"
-    t.bigint "admin_user_id"
+    t.integer "estado", precision: 38
+    t.integer "tip_tra", precision: 38
+    t.integer "esta_civil", precision: 38
+    t.integer "afp", precision: 38
+    t.integer "admin_user_id", limit: 19, precision: 19
     t.string "foto"
     t.string "ape_nom"
     t.string "correo_corp"
@@ -67,14 +64,14 @@ ActiveRecord::Schema.define(version: 20171017220714) do
     t.date "fec_tercon"
     t.string "grado"
     t.string "cargo"
-    t.integer "area"
-    t.integer "sele"
+    t.integer "area", precision: 38
+    t.integer "sele", precision: 38
     t.float "remuneracion"
-    t.integer "sele2"
+    t.integer "sele2", precision: 38
     t.string "distrito"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["admin_user_id"], name: "index_employees_on_admin_user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["admin_user_id"], name: "i_employees_admin_user_id"
   end
 
   add_foreign_key "employees", "admin_users"
