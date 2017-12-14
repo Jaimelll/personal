@@ -3,7 +3,7 @@ ActiveAdmin.register Employee do
 
 
 
-    menu  priority: 16, label: "Personal"
+    menu  priority: 2, label: "Personal"
 
     permit_params :dni, :ape_pat, :ape_mat,
          :nombres, :direccion, :telefono,
@@ -17,27 +17,54 @@ ActiveAdmin.register Employee do
 
 
          scope :Activos, :default => true do |emples|
+            if current_admin_user.categoria==1 then
                    emples.where(estado:1,correo_corp:current_admin_user.email)
-              end
+            else
+                   emples.where(estado:1)
+            end
+          end
 
         scope :CAS, :default => true do |emples|
-                        emples.where(tip_tra:1)
+             if current_admin_user.categoria==1 then
+                 emples.where(tip_tra:1,correo_corp:current_admin_user.email)
+             else
+                 emples.where(tip_tra:1)
              end
+
+         end
+
         scope :Orden_servicio, :default => true do |emples|
-                       emples.where(tip_tra:2)
+          if current_admin_user.categoria==1 then
+              emples.where(tip_tra:2,correo_corp:current_admin_user.email)
+          else
+              emples.where(tip_tra:2)
+          end
             end
         scope :Militares, :default => true do |emples|
-                    emples.where(tip_tra:3)
+          if current_admin_user.categoria==1 then
+              emples.where(tip_tra:3,correo_corp:current_admin_user.email)
+          else
+              emples.where(tip_tra:3)
+          end
                end
 
 
          scope :Inactivos, :default => true do |emples|
-                        emples.where(estado:2)
-                   end
+           if current_admin_user.categoria==1 then
+               emples.where(estado:2,correo_corp:current_admin_user.email)
+           else
+               emples.where(estado:2)
+           end
+
+         end
 
          scope :Todos, :default => true do |emples|
-                          emples.order('ape_nom')
-               end
+           if current_admin_user.categoria==1 then
+               emples.where(correo_corp:current_admin_user.email).order('ape_nom')
+           else
+               emples.order('ape_nom')
+           end
+         end
 
 
   filter :ape_nom, label:'Apellido Nombre'

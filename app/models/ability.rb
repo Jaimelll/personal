@@ -6,10 +6,12 @@ class Ability
     user ||= User.new # guest user (not logged in)
 
    case user.categoria # a_variable is the variable we want to compare
-   when 2 #jaime
+       when 2,3 #jaime
          can :manage, :all
-        else
-          can :read, :all
+       when 1
+          can :read, ActiveAdmin::Page, :name =>"Dashboard"
+          can [:read], [Employee]
+
     end
 
     #   user ||= User.new # guest user (not logged in)
