@@ -11,7 +11,7 @@ gem 'ruby-oci8'
 gem 'ruby-plsql'
 gem 'activerecord-oracle_enhanced-adapter'
 
-
+gem "devise_ldap_authenticatable"
 
 
 

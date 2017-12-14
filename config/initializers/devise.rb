@@ -1,12 +1,23 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
+  # ==> LDAP Configuration 
+  config.ldap_logger = true
+  config.ldap_create_user = true
+  config.ldap_update_password = true
+  # config.ldap_config = "#{Rails.root}/config/ldap.yml"
+  # config.ldap_check_group_membership = false
+  # config.ldap_check_group_membership_without_admin = false
+  # config.ldap_check_attributes = false
+  config.ldap_use_admin_to_bind = true
+  # config.ldap_ad_group_check = false
+
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = '1ede3cf76c46a3991e7913452cf7abd4fd3a219bd50b75004af0169add7035ff51b47a816f8c568517ec0074667b610f97a5f1c2859c36738f9cd4644e37c6c8'
+  config.secret_key = '7e6351afe820ba1a628329d5b05b99a0c930b27ff4a38171466a7f5f1732cc7823927628d525c6dc8f9270b5c6cc910f043c370a92b30482165612c78e79cb62'
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
@@ -34,7 +45,7 @@ Devise.setup do |config|
   # session. If you need permissions, you should implement that in a before filter.
   # You can also supply a hash where the value is a boolean determining whether
   # or not authentication should be aborted when the value is not present.
-  # config.authentication_keys = [:email]
+  config.authentication_keys = [:email]
 
   # Configure parameters from the request object used for authentication. Each entry
   # given should be a request method and it will automatically be passed to the
@@ -108,7 +119,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 11
 
   # Set up a pepper to generate the hashed password.
-  # config.pepper = '2f7db44cc94110d27698afc2a86728028c92f94e13e72b15bdb20704db769fadb089586588865ff9aff2a9b84e7ffefe3d2c89c0d3b4545a7b5821c09d6cf445'
+  # config.pepper = 'b794605fc54e7be7388d6203cd67497fef39cc96ece604c96e43efd7fa6f89f19c118f3d887cd6e9cd4f9b5f9904ec88848898f3d6bf5b0af5978f918a020544'
 
   # Send a notification to the original email when the user's email is changed.
   # config.send_email_changed_notification = false
