@@ -22,13 +22,7 @@ authorizations: &AUTHORIZATIONS
 ## Environment
 
 development:
-  host: 10.30.40.67
-  port: 389
-  attribute: mail
-  base: DC=acffaa,DC=local
-  admin_user: CN=Svrmaster,OU=Oficina de Informatica,OU=acffaa Usuarios,DC=acffaa,DC=local
-  admin_password: $3rv3r*17pe
-  ssl: false
+  
   #host: localhost
   #port: 389
   #attribute: cn
