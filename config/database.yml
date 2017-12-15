@@ -41,14 +41,25 @@
     #pool: 5
     #timeout: 5000
 
- default: &default
+
+
+
+ development:
+
    adapter: oracle_enhanced
    pool: 5
    timeout: 5000
-
- development:
-   <<: *default
-
    database: //172.25.10.3:1521/DBDES
    username: DBPERSONAL
    password: ORACLE
+
+   production:
+      adapter: postgresql
+      encoding: unicode
+      username: postgres
+      password: password
+      host: 172.25.10.6
+      port: 3
+      database: personalp
+      pool: 5
+      timeout: 5000

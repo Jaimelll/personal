@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :formulas
+  resources :products
 root 'admin/dashboard#index'
 
   resources :employees

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171213215119) do
+ActiveRecord::Schema.define(version: 20171215164824) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -2554,6 +2554,33 @@ ActiveRecord::Schema.define(version: 20171213215119) do
     t.index ["admin_user_id"], name: "i_employees_admin_user_id"
   end
 
+  create_table "formulas", force: :cascade do |t|
+    t.string "nombre"
+    t.string "descripcion"
+    t.integer "orden", precision: 38
+    t.string "obs"
+    t.integer "cantidad", precision: 38
+    t.integer "admin_user_id", limit: 19, precision: 19
+    t.integer "product_id", limit: 19, precision: 19
+    t.integer "numero", precision: 38
+    t.integer "acti", precision: 38
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["admin_user_id"], name: "i_formulas_admin_user_id"
+    t.index ["product_id"], name: "index_formulas_on_product_id"
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.string "nombre"
+    t.string "descripcion"
+    t.integer "orden", precision: 38
+    t.string "obs"
+    t.integer "admin_user_id", limit: 19, precision: 19
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["admin_user_id"], name: "i_products_admin_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -2572,4 +2599,7 @@ ActiveRecord::Schema.define(version: 20171213215119) do
   end
 
   add_foreign_key "employees", "admin_users"
+  add_foreign_key "formulas", "admin_users"
+  add_foreign_key "formulas", "products"
+  add_foreign_key "products", "admin_users"
 end

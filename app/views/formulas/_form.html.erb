@@ -1,0 +1,62 @@
+<%= form_with(model: formula, local: true) do |form| %>
+  <% if formula.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(formula.errors.count, "error") %> prohibited this formula from being saved:</h2>
+
+      <ul>
+      <% formula.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :nombre %>
+    <%= form.text_field :nombre, id: :formula_nombre %>
+  </div>
+
+  <div class="field">
+    <%= form.label :descripcion %>
+    <%= form.text_field :descripcion, id: :formula_descripcion %>
+  </div>
+
+  <div class="field">
+    <%= form.label :orden %>
+    <%= form.number_field :orden, id: :formula_orden %>
+  </div>
+
+  <div class="field">
+    <%= form.label :obs %>
+    <%= form.text_field :obs, id: :formula_obs %>
+  </div>
+
+  <div class="field">
+    <%= form.label :cantidad %>
+    <%= form.number_field :cantidad, id: :formula_cantidad %>
+  </div>
+
+  <div class="field">
+    <%= form.label :admin_user_id %>
+    <%= form.text_field :admin_user_id, id: :formula_admin_user_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :product_id %>
+    <%= form.text_field :product_id, id: :formula_product_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :numero %>
+    <%= form.number_field :numero, id: :formula_numero %>
+  </div>
+
+  <div class="field">
+    <%= form.label :acti %>
+    <%= form.number_field :acti, id: :formula_acti %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
