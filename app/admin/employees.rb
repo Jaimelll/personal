@@ -39,29 +39,67 @@ end
    end
 
          scope :Activos, :default => true do |emples|
-                   emples.where(estado:1)
-              end
+           if current_admin_user.categoria==1 then
+              emples.where(estado:1,correo_corp:current_admin_user.email)
+           else
+              emples.where(estado:1)
+           end
+         end
 
         scope :CAS, :default => true do |emples|
-                        emples.where(tip_tra:1,estado:1)
-             end
+          if current_admin_user.categoria==1 then
+             emples.where(tip_tra:1,estado:1,correo_corp:current_admin_user.email)
+          else
+             emples.where(tip_tra:1,estado:1)
+          end
+        end
+
+
         scope :Orden_servicio, :default => true do |emples|
-                       emples.where(tip_tra:2,estado:1)
-            end
+          if current_admin_user.categoria==1 then
+             emples.where(tip_tra:2,estado:1,correo_corp:current_admin_user.email)
+          else
+             emples.where(tip_tra:2,estado:1)
+          end
+        end
+
+
         scope :Militares, :default => true do |emples|
-                    emples.where(tip_tra:3,estado:1)
-               end
+          if current_admin_user.categoria==1 then
+             emples.where(tip_tra:3,estado:1,correo_corp:current_admin_user.email)
+          else
+             emples.where(tip_tra:3,estado:1)
+          end
+        end
+
+
         scope :Otros, :default => true do |emples|
-                     emples.where(tip_tra:4,estado:1)
-                      end
+          if current_admin_user.categoria==1 then
+             emples.where(tip_tra:4,estado:1,correo_corp:current_admin_user.email)
+          else
+             emples.where(tip_tra:4,estado:1)
+          end
+        end
+
 
          scope :Inactivos, :default => true do |emples|
-                        emples.where(estado:2)
-                   end
+
+           if current_admin_user.categoria==1 then
+              emples.where(estado:2,correo_corp:current_admin_user.email)
+           else
+              emples.where(estado:2)
+           end
+          end
+
 
          scope :Todos, :default => true do |emples|
-                          emples.order('ape_nom')
-               end
+           if current_admin_user.categoria==1 then
+              emples.where(correo_corp:current_admin_user.email)
+           else
+                  emples.order('ape_nom')
+           end
+          end
+
 
 
   filter :ape_nom, label:'Apellido Nombre'
@@ -73,6 +111,7 @@ end
 
 
   index :title => 'Lista de Personal' do
+
 
 
 
@@ -156,6 +195,9 @@ end
      end
 
      show :title => ' Personal'  do
+       vempl1=Employee.where(correo_corp:current_admin_user.email).select('id as dd').first.dd.to_s
+       vempl2=params[:id]
+       if current_admin_user.categoria==3 or current_admin_user.categoria==2 or vempl1==vempl2 then
 
              attributes_table  do
 
@@ -255,11 +297,14 @@ end
 
              end
                 end
-
+end
 
            sidebar "Foto", except: :index  do
+             vempl1=Employee.where(correo_corp:current_admin_user.email).select('id as dd').first.dd.to_s
+             vempl2=params[:id]
+             if current_admin_user.categoria==3 or current_admin_user.categoria==2 or vempl1==vempl2 then
 
-                      if params[:id] then
+
                      Employee.where(id:params[:id]).each do |item|
                        @nomb=item.ape_nom.upcase
                        unless item.foto.blank?
@@ -275,7 +320,9 @@ end
                   li      link_to "CARGA FAMILIAR", admin_employee_families_path(params[:id])
                   li      link_to "ESTUDIOS", admin_employee_students_path(params[:id])
                   li      link_to "EXPERIENCIA LABORAL", admin_employee_experiences_path(params[:id])
+                  if current_admin_user.categoria==3 or current_admin_user.categoria==2 then
                   li      link_to "CONTRATOS", admin_employee_agreements_path(params[:id])
+                  end
 
                            end
              end

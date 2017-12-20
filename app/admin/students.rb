@@ -11,6 +11,9 @@ ActiveAdmin.register Student do
 
   index :title => 'Lista de Estudios' do
 
+    vempl1=Employee.where(correo_corp:current_admin_user.email).select('id as dd').first.dd.to_s
+    vempl2=params[:employee_id]
+    if current_admin_user.categoria==3 or current_admin_user.categoria==2 or vempl1==vempl2 then
 
 
 
@@ -23,7 +26,7 @@ ActiveAdmin.register Student do
 
            actions
        end
-
+     end
 
        form :title => 'Edicion Estudios'  do |f|
 
@@ -72,7 +75,9 @@ ActiveAdmin.register Student do
 
                sidebar "Foto" do
 
-                     if params[:employee_id] then
+                 vempl1=Employee.where(correo_corp:current_admin_user.email).select('id as dd').first.dd.to_s
+                 vempl2=params[:employee_id]
+                 if current_admin_user.categoria==3 or current_admin_user.categoria==2 or vempl1==vempl2 then
                     Employee.where(id:params[:employee_id]).each do |item|
                       @nomb=item.ape_nom.upcase
                       unless item.foto.blank?
@@ -81,8 +86,7 @@ ActiveAdmin.register Student do
 
 
                    end
-                 end
-                if params[:employee_id] then
+                
 
                  li link_to "Nombre: "+"#{@nomb}", admin_employee_path(params[:employee_id])
 

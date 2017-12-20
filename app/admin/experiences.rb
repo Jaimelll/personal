@@ -10,6 +10,9 @@ ActiveAdmin.register Experience do
   filter :empresa
 
   index :title => 'Lista de Experiencia Laboral' do
+    vempl1=Employee.where(correo_corp:current_admin_user.email).select('id as dd').first.dd.to_s
+    vempl2=params[:employee_id]
+    if current_admin_user.categoria==3 or current_admin_user.categoria==2 or vempl1==vempl2 then
 
     column("empresa")
 
@@ -21,7 +24,7 @@ ActiveAdmin.register Experience do
 
            actions
        end
-
+  end
 
        form :title => 'Edicion Carga Familiar'  do |f|
 
@@ -63,11 +66,13 @@ ActiveAdmin.register Experience do
 
                  end
                end
-
+              
 
                sidebar "Foto" do
+                 vempl1=Employee.where(correo_corp:current_admin_user.email).select('id as dd').first.dd.to_s
+                 vempl2=params[:employee_id]
+                 if current_admin_user.categoria==3 or current_admin_user.categoria==2 or vempl1==vempl2 then
 
-                     if params[:employee_id] then
                     Employee.where(id:params[:employee_id]).each do |item|
                       @nomb=item.ape_nom.upcase
                       unless item.foto.blank?
@@ -76,16 +81,15 @@ ActiveAdmin.register Experience do
 
 
                    end
-                 end
-                if params[:employee_id] then
+
 
                  li link_to "Nombre: "+"#{@nomb}", admin_employee_path(params[:employee_id])
 
-                end
+
 
                  end # de sider
 
-
+             end
 
 
 

@@ -10,7 +10,9 @@ permit_params :employee_id, :tipo_rela, :ape_nom,
 filter :ape_nom
 
 index :title => 'Lista de Carga Familiar' do
-
+  vempl1=Employee.where(correo_corp:current_admin_user.email).select('id as dd').first.dd.to_s
+  vempl2=params[:employee_id]
+  if current_admin_user.categoria==3 or current_admin_user.categoria==2 or vempl1==vempl2 then
 
 
         column("Apellido Nombre", :sortable => :ape_nom) do |fam|
@@ -39,7 +41,7 @@ index :title => 'Lista de Carga Familiar' do
 
          actions
      end
-
+end
 
      form :title => 'Edicion Carga Familiar'  do |f|
 
@@ -91,8 +93,10 @@ index :title => 'Lista de Carga Familiar' do
 
 
              sidebar "Foto" do
+               vempl1=Employee.where(correo_corp:current_admin_user.email).select('id as dd').first.dd.to_s
+               vempl2=params[:employee_id]
+               if current_admin_user.categoria==3 or current_admin_user.categoria==2 or vempl1==vempl2 then
 
-                   if params[:employee_id] then
                   Employee.where(id:params[:employee_id]).each do |item|
                     @nomb=item.ape_nom.upcase
                     unless item.foto.blank?
@@ -101,8 +105,7 @@ index :title => 'Lista de Carga Familiar' do
 
 
                  end
-               end
-              if params[:employee_id] then
+            
 
                li link_to "Nombre: "+"#{@nomb}", admin_employee_path(params[:employee_id])
 
