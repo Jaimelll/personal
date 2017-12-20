@@ -30,12 +30,16 @@ end
          :anexo, :celular_corp, :obs, :sele3
 
    action_item :actualiza,only: :show do
+       if current_admin_user.categoria==3 or current_admin_user.categoria==2 then
          link_to 'Actualiza Contrato', actualiza_admin_employee_path( params[:id]), method: :put
+         end
    end
 
    member_action :actualiza, method: :put do
-      Formula.where( product_id:22 ,orden:1).update_all( cantidad:1 )
-     redirect_to admin_employee_path(params[:id])
+
+          Formula.where( product_id:22 ,orden:1).update_all( cantidad:1 )
+          redirect_to admin_employee_path(params[:id])
+
    end
 
          scope :Activos, :default => true do |emples|
@@ -283,6 +287,7 @@ end
 
                            end
              end
+             if current_admin_user.categoria==3 or current_admin_user.categoria==2 then
              row 'Nivel' do |emple|
                emple.sele
              end
@@ -297,9 +302,10 @@ end
 
              end
                 end
-end
+                   end
+                      end
 
-           sidebar "Foto", except: :index  do
+   sidebar "Foto", except: :index  do
              vempl1=Employee.where(correo_corp:current_admin_user.email).select('id as dd').first.dd.to_s
              vempl2=params[:id]
              if current_admin_user.categoria==3 or current_admin_user.categoria==2 or vempl1==vempl2 then
@@ -326,6 +332,7 @@ end
 
                            end
              end
+if current_admin_user.categoria==3 or current_admin_user.categoria==2 then
              panel  "Datos de Contratos " do
 
 @conta=0
@@ -391,7 +398,7 @@ ul do
 end
 
 end
-
+end
    end #end de sidebar
 
 
