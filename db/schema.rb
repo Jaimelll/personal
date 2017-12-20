@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171215184821) do
+ActiveRecord::Schema.define(version: 20171219190931) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -42,6 +42,28 @@ ActiveRecord::Schema.define(version: 20171215184821) do
     t.integer "categoria", precision: 38, default: 1, null: false
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "i_adm_use_res_pas_tok", unique: true
+  end
+
+  create_table "agreements", force: :cascade do |t|
+    t.integer "employee_id", precision: 38
+    t.integer "num_cont", precision: 38
+    t.date "fec_inicon"
+    t.date "fec_tercon"
+    t.string "puesto"
+    t.integer "cod_hor", precision: 38
+    t.float "remuneracion"
+    t.integer "area", precision: 38
+    t.integer "tipo_contra", precision: 38
+    t.date "fec_retiro"
+    t.string "motivo_retir"
+    t.string "obs"
+    t.string "contra"
+    t.integer "sele", precision: 38
+    t.integer "admin_user_id", precision: 38
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["admin_user_id"], name: "i_agreements_admin_user_id"
+    t.index ["employee_id"], name: "i_agreements_employee_id"
   end
 
   create_table "dmrs_additional_ct_objects", id: false, force: :cascade do |t|
@@ -2558,6 +2580,32 @@ ActiveRecord::Schema.define(version: 20171215184821) do
     t.index ["admin_user_id"], name: "i_employees_admin_user_id"
   end
 
+  create_table "experiences", force: :cascade do |t|
+    t.integer "employee_id", precision: 38
+    t.string "empresa"
+    t.date "desde"
+    t.date "hasta"
+    t.string "cargo"
+    t.string "obs"
+    t.integer "admin_user_id", precision: 38
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["admin_user_id"], name: "i_experiences_admin_user_id"
+    t.index ["employee_id"], name: "i_experiences_employee_id"
+  end
+
+  create_table "families", force: :cascade do |t|
+    t.integer "employee_id", precision: 38
+    t.integer "tipo_rela", precision: 38
+    t.string "ape_nom"
+    t.date "fec_nac"
+    t.integer "admin_user_id", precision: 38
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["admin_user_id"], name: "i_families_admin_user_id"
+    t.index ["employee_id"], name: "index_families_on_employee_id"
+  end
+
   create_table "formulas", force: :cascade do |t|
     t.string "nombre"
     t.string "descripcion"
@@ -2585,6 +2633,21 @@ ActiveRecord::Schema.define(version: 20171215184821) do
     t.index ["admin_user_id"], name: "i_products_admin_user_id"
   end
 
+  create_table "students", force: :cascade do |t|
+    t.integer "employee_id", precision: 38
+    t.string "centro"
+    t.string "especialidad"
+    t.date "desde"
+    t.date "hasta"
+    t.string "grado"
+    t.string "obs"
+    t.integer "admin_user_id", precision: 38
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["admin_user_id"], name: "i_students_admin_user_id"
+    t.index ["employee_id"], name: "index_students_on_employee_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -2602,8 +2665,16 @@ ActiveRecord::Schema.define(version: 20171215184821) do
     t.index ["reset_password_token"], name: "i_users_reset_password_token", unique: true
   end
 
+  add_foreign_key "agreements", "admin_users"
+  add_foreign_key "agreements", "employees"
   add_foreign_key "employees", "admin_users"
+  add_foreign_key "experiences", "admin_users"
+  add_foreign_key "experiences", "employees"
+  add_foreign_key "families", "admin_users"
+  add_foreign_key "families", "employees"
   add_foreign_key "formulas", "admin_users"
   add_foreign_key "formulas", "products"
   add_foreign_key "products", "admin_users"
+  add_foreign_key "students", "admin_users"
+  add_foreign_key "students", "employees"
 end

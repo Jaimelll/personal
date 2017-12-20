@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  resources :agreements
+  resources :students
+  resources :families
+  resources :experiences
   resources :formulas
   resources :products
 root 'admin/dashboard#index'

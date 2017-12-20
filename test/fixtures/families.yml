@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee: one
+  tipo_rela: MyString
+  admin_user: one
+
+two:
+  employee: two
+  tipo_rela: MyString
+  admin_user: two

@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @agreement.employee %>
+</p>
+
+<p>
+  <strong>Puesto:</strong>
+  <%= @agreement.puesto %>
+</p>
+
+<p>
+  <strong>Admin user:</strong>
+  <%= @agreement.admin_user %>
+</p>
+
+<%= link_to 'Edit', edit_agreement_path(@agreement) %> |
+<%= link_to 'Back', agreements_path %>

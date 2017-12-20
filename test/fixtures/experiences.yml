@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee: one
+  empresa: MyString
+  desde: 2017-12-19
+  hasta: 2017-12-19
+  cargo: MyString
+  obs: 1
+  admin_user: one
+
+two:
+  employee: two
+  empresa: MyString
+  desde: 2017-12-19
+  hasta: 2017-12-19
+  cargo: MyString
+  obs: 1
+  admin_user: two
