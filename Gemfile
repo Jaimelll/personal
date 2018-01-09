@@ -15,6 +15,12 @@ gem "devise_ldap_authenticatable"
 
 
 
+gem 'rubyzip', '= 1.0.0'
+gem 'axlsx', '= 2.0.1'
+gem 'axlsx_rails'
+
+
+
 #para imagenes
 gem 'carrierwave', '~> 0.10.0'
 gem 'mini_magick', '~> 4.3'
