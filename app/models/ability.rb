@@ -11,10 +11,11 @@ class Ability
        when 2
            can :read, ActiveAdmin::Page, :name =>"Dashboard"
            can [:create,:read,:update,:destroy],  [Employee]
+           can [:create,:read,:update,:destroy],  [Family,Experience,Student,Agreements]
        when 1
           can :read, ActiveAdmin::Page, :name =>"Dashboard"
           can [:read], [Employee]
-          can [:create,:read,:update,:destroy],  [Family,Experience,Student]
+          can [:read], [Family,Experience,Student]
     end
 
     #   user ||= User.new # guest user (not logged in)
