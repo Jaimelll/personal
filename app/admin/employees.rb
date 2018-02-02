@@ -132,6 +132,10 @@ end
           column("Perfil") do |emple|
             emple.grado
           end
+          column("Remuneracion", :class => 'text-right', :sortable => :remuneracion) do |emple|
+          #  number_to_currency emple.remuneracion
+              number_to_currency(emple.remuneracion, :unit => "S/ ",:precision=> 0)
+          end
           column("area") do |emple|
                       if emple.area and emple.area>0 then
 
