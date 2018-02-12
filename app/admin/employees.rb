@@ -27,7 +27,7 @@ end
          :correo_corp, :fec_inicon, :fec_tercon,
          :cargo, :grado,:area, :sele,
          :remuneracion, :sele2, :distrito,
-         :anexo, :celular_corp, :obs, :sele3
+         :anexo, :celular_corp, :obs, :sele3, :vigencia
 
    action_item :actualiza,only: :show do
        if current_admin_user.categoria==3 or current_admin_user.categoria==2 then
@@ -187,6 +187,7 @@ end
             Formula.where(product_id:24).order('nombre').map{|u| [u.nombre, u.orden]}
          f.input :sele,:label => 'Nivel', :input_html => { :style =>  'width:30%'}
          f.input :remuneracion,:as =>:string, :input_html => { :style =>  'width:30%'}
+         f.input :vigencia, :label => 'Vigencia de certificacion' ,:as =>:string, :input_html => { :style =>  'width:30%'}
          f.input :foto, :as => :file, :hint => f.object.foto.present? \
                 ? image_tag(f.object.foto.url(:thumb))
                  : content_tag(:span, "no hay foto aun")
@@ -300,6 +301,9 @@ end
 
               number_with_delimiter(emple.remuneracion, delimiter: ",")
 
+            end
+            row 'Vigencia de certificacion' do |emple|
+              emple.vigencia
             end
             row :foto
 

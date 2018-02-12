@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171219190931) do
+ActiveRecord::Schema.define(version: 20180212131711) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -2577,6 +2577,7 @@ ActiveRecord::Schema.define(version: 20171219190931) do
     t.string "celular_corp"
     t.integer "sele3", precision: 38
     t.string "obs"
+    t.date "vigencia"
     t.index ["admin_user_id"], name: "i_employees_admin_user_id"
   end
 
