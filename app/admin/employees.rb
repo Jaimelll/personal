@@ -303,7 +303,9 @@ end
 
             end
             row 'Vigencia de certificacion' do |emple|
-              emple.vigencia
+                if emple.vigencia then
+                  emple.vigencia
+                end
             end
             row :foto
 
