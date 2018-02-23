@@ -96,11 +96,11 @@ end
           end
 
 
-         scope :Todos, :default => true do |emples|
+         scope :Certificados, :default => true do |emples|
            if current_admin_user.categoria==1 then
               emples.where(correo_corp:current_admin_user.email)
            else
-                  emples.order('ape_nom')
+                  emples.where('vigencia IS NOT NULL and vigencia>current_date').order('ape_nom')
            end
           end
 
