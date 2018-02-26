@@ -16,6 +16,10 @@ class Ability
           can :read, ActiveAdmin::Page, :name =>"Dashboard"
           can [:read], [Employee]
           can [:read], [Family,Experience,Student]
+        when 4
+           can :read, ActiveAdmin::Page, :name =>"Dashboard"
+           can [:read], [Employee]
+           can [:read], [Family,Experience,Student]
     end
 
     #   user ||= User.new # guest user (not logged in)

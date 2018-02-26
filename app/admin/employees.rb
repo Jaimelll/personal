@@ -43,66 +43,105 @@ end
    end
 
          scope :Activos, :default => true do |emples|
-           if current_admin_user.categoria==1 then
-              emples.where(estado:1,correo_corp:current_admin_user.email)
-           else
-              emples.where(estado:1)
-           end
+          case current_admin_user.categoria
+            when 1
+                 emples.where(estado:1,correo_corp:current_admin_user.email)
+            when 2,3
+                emples.where(estado:1)
+            when 4
+                varea=Employee.where(correo_corp:current_admin_user.email).select('area as dd').first.dd
+                emples.where(estado:1,area:varea)
+            end
+
          end
 
         scope :CAS, :default => true do |emples|
-          if current_admin_user.categoria==1 then
-             emples.where(tip_tra:1,estado:1,correo_corp:current_admin_user.email)
-          else
-             emples.where(tip_tra:1,estado:1)
-          end
+          case current_admin_user.categoria
+            when 1
+               emples.where(tip_tra:1,estado:1,correo_corp:current_admin_user.email)
+            when 2,3
+               emples.where(tip_tra:1,estado:1)
+            when 4
+                varea=Employee.where(correo_corp:current_admin_user.email).select('area as dd').first.dd
+                emples.where(tip_tra:1,estado:1,area:varea)
+            end
+
         end
 
 
         scope :Orden_servicio, :default => true do |emples|
-          if current_admin_user.categoria==1 then
-             emples.where(tip_tra:2,estado:1,correo_corp:current_admin_user.email)
-          else
-             emples.where(tip_tra:2,estado:1)
-          end
+          case current_admin_user.categoria
+            when 1
+               emples.where(tip_tra:2,estado:1,correo_corp:current_admin_user.email)
+            when 2,3
+               emples.where(tip_tra:2,estado:1)
+            when 4
+                varea=Employee.where(correo_corp:current_admin_user.email).select('area as dd').first.dd
+                emples.where(tip_tra:2,estado:1,area:varea)
+            end
         end
 
 
         scope :Militares, :default => true do |emples|
-          if current_admin_user.categoria==1 then
-             emples.where(tip_tra:3,estado:1,correo_corp:current_admin_user.email)
-          else
-             emples.where(tip_tra:3,estado:1)
-          end
+          case current_admin_user.categoria
+            when 1
+               emples.where(tip_tra:3,estado:1,correo_corp:current_admin_user.email)
+            when 2,3
+               emples.where(tip_tra:3,estado:1)
+            when 4
+                varea=Employee.where(correo_corp:current_admin_user.email).select('area as dd').first.dd
+                emples.where(tip_tra:3,estado:1,area:varea)
+            end
         end
+
+
+
 
 
         scope :Otros, :default => true do |emples|
-          if current_admin_user.categoria==1 then
-             emples.where(tip_tra:4,estado:1,correo_corp:current_admin_user.email)
-          else
-             emples.where(tip_tra:4,estado:1)
-          end
+          case current_admin_user.categoria
+            when 1
+               emples.where(tip_tra:4,estado:1,correo_corp:current_admin_user.email)
+            when 2,3
+               emples.where(tip_tra:4,estado:1)
+            when 4
+                varea=Employee.where(correo_corp:current_admin_user.email).select('area as dd').first.dd
+                emples.where(tip_tra:4,estado:1,area:varea)
+            end
         end
 
 
-         scope :Inactivos, :default => true do |emples|
 
-           if current_admin_user.categoria==1 then
-              emples.where(estado:2,correo_corp:current_admin_user.email)
-           else
-              emples.where(estado:2)
+
+         scope :Inactivos, :default => true do |emples|
+    
+            case current_admin_user.categoria
+              when 1
+                   emples.where(estado:2,correo_corp:current_admin_user.email)
+              when 2,3
+                  emples.where(estado:2)
+              when 4
+                  varea=Employee.where(correo_corp:current_admin_user.email).select('area as dd').first.dd
+                  emples.where(estado:2,area:varea)
+              end
+
            end
-          end
+
 
 
          scope :Certificados, :default => true do |emples|
-           if current_admin_user.categoria==1 then
-              emples.where(correo_corp:current_admin_user.email)
-           else
-                  emples.where('vigencia IS NOT NULL and vigencia>current_date').order('ape_nom')
-           end
+           case current_admin_user.categoria
+             when 1
+                     emples.where(correo_corp:current_admin_user.email).where('vigencia IS NOT NULL and vigencia>current_date').order('ape_nom')
+             when 2,3
+                   emples.where('vigencia IS NOT NULL and vigencia>current_date').order('ape_nom')
+             when 4
+                 varea=Employee.where(correo_corp:current_admin_user.email).select('area as dd').first.dd
+                   emples.where(area:varea).where('vigencia IS NOT NULL and vigencia>current_date').order('ape_nom')
+             end
+
           end
+
 
 
 

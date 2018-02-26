@@ -3,8 +3,15 @@ ActiveAdmin.register_page "Dashboard" do
   menu priority: 1, label: proc{ I18n.t("active_admin.dashboard") }
 
   content title: proc{ I18n.t("active_admin.dashboard") } do
+
+
+    case current_admin_user.categoria
+
+      when 2,3
+        li  link_to "Relacion de Personal Activo", reports_vhoja1_path(format:  "xlsx")
+
+   end
     
-li  link_to "Relacion de Personal Activo", reports_vhoja1_path(format:  "xlsx")
     # Here is an example of a simple dashboard with columns and panels.
     #
     # columns do
