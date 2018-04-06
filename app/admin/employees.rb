@@ -114,7 +114,7 @@ end
 
 
          scope :Inactivos, :default => true do |emples|
-    
+
             case current_admin_user.categoria
               when 1
                    emples.where(estado:2,correo_corp:current_admin_user.email)
@@ -221,12 +221,15 @@ end
                Formula.where(product_id:22).order('nombre').map{|u| [u.nombre, u.orden]}
          f.input :tip_tra,:label => 'Tipo de vinculo', :as => :select, :collection =>
             Formula.where(product_id:23).order('nombre').map{|u| [u.nombre, u.orden]}
-         f.input :fec_nacimiento, :label => 'Fecha de nacimiento' ,:as =>:string, :input_html => { :style =>  'width:30%'}
+         f.input :fec_nacimiento, :label => 'Fecha de nacimiento' , as: :datepicker, :input_html => { :style =>  'width:30%'}
          f.input :esta_civil, :as => :select, :collection =>
             Formula.where(product_id:24).order('nombre').map{|u| [u.nombre, u.orden]}
-         f.input :sele,:label => 'Nivel', :input_html => { :style =>  'width:30%'}
+         f.input :sele,:label => 'Nivel', :as => :select, :collection =>
+            Formula.where(product_id:10000).order('nombre').map{|u| [u.nombre, u.orden]}
          f.input :remuneracion,:as =>:string, :input_html => { :style =>  'width:30%'}
-         f.input :vigencia, :label => 'Vigencia de certificacion' ,:as =>:string, :input_html => { :style =>  'width:30%'}
+         f.input :fec_inicon, :label => 'Fecha de ingreso' , as: :datepicker, :input_html => { :style =>  'width:30%'}
+         f.input :fec_tercon, :label => 'Término de contrato' , as: :datepicker, :input_html => { :style =>  'width:30%'}
+         f.input :vigencia, :label => 'Vigencia de certificacion' , as: :datepicker, :input_html => { :style =>  'width:30%'}
          f.input :foto, :as => :file, :hint => f.object.foto.present? \
                 ? image_tag(f.object.foto.url(:thumb))
                  : content_tag(:span, "no hay foto aun")
@@ -333,7 +336,14 @@ end
              end
              if current_admin_user.categoria==3 or current_admin_user.categoria==2 then
              row 'Nivel' do |emple|
-               emple.sele
+               if emple.sele and emple.sele>0 then
+
+                  Formula.where(product_id:10000, orden:emple.sele).
+                                   select('nombre as dd').first.dd
+
+
+                 end
+
              end
 
              row :remuneracion do |emple|

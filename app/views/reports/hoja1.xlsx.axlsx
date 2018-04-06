@@ -3,7 +3,8 @@ wb = xlsx_package.workbook
 wb.styles do |style|
 
 titu = style.add_style( border: Axlsx::STYLE_THIN_BORDER,
-                                 alignment: { horizontal: :center })
+                                 alignment: { horizontal: :center,vertical: :center, wrap_text: :true },
+                                b: true, sz: 8, bg_color: "C1C1C1")
 
 soles = style.add_style(border: Axlsx::STYLE_THIN_BORDER,
                            alignment: { horizontal: :center },num_fmt: 8)
@@ -21,33 +22,68 @@ izq = style.add_style( border: Axlsx::STYLE_THIN_BORDER,
 
 
 
-wb.add_worksheet(name: "Activos") do |sheet|
+wb.add_worksheet(name: "CAS activos") do |sheet|
 
   sheet.add_row []
 
-  sheet.add_row %w(N NOMBRE AREA VINCULO),
-  style: [centra, centra, centra, centra]
+  sheet.add_row %w(N NOMBRE AREA NIVEL REMUNERACIÓN CALCULO OBSERVACIÓN DIFERENCIA),
+  style: [titu, titu, titu, titu, titu, titu, titu, titu]
 
  @conta=0
 
 
- Employee.where(estado:1).order('tip_tra,ape_nom').each do |emple|
+ Employee.where(estado:1,tip_tra:1).order('ape_nom').each do |emple|
  @conta=@conta+1
 
   @varea=Formula.where(product_id:26,orden:emple.area).select('nombre as dd').first.dd
-  @vtipo=Formula.where(product_id:23,orden:emple.tip_tra).select('nombre as dd').first.dd
+
+  if emple.sele and emple.sele>0 then
+     @vtipo=Formula.where(product_id:10000,orden:emple.sele).select('nombre as dd').first.dd
+     min=Formula.where(product_id:10000,orden:emple.sele).select('numero as dd').first.dd
+     max=Formula.where(product_id:10000,orden:emple.sele).select('acti as dd').first.dd
+  else
+     @vtipo=""
+     min=0
+     max=0
+  end
+  if min>0 then
+    if emple.remuneracion>=min and emple.remuneracion<=max then
+       nuevo=emple.remuneracion
+       obb="mantiene"
+    end
+   if emple.remuneracion<min then
+     nuevo=min
+        obb="sube"
+   end
+
+   if emple.remuneracion>max then
+     nuevo=max
+        obb="baja"
+   end
+  dif=nuevo-emple.remuneracion
+
+else
+nuevo=0
+dif=0
+  obb=""
+end
 
 
+   sheet.add_row [ @conta, emple.ape_nom,   @varea, @vtipo, emple.remuneracion,nuevo,obb,dif ],
+   style: [centra, izq, centra, centra, soles, soles, centra, soles]
 
 
-
-   sheet.add_row [ @conta, emple.ape_nom,   @varea, @vtipo ],
-   style: [centra, izq, centra, centra]
 
 
 
 end
+vvccon= @conta+2
+tot="TOTAL"
+sheet.add_row [nil,tot,nil,nil,"=SUM(E3:E#{ vvccon})","=SUM(F4:F#{vvccon})",nil,"=SUM(H4:H#{vvccon})" ],
+    style: [soles, centra, soles, soles, soles, soles, soles, soles]
 
+
+sheet.column_widths *[5, 30, 10, 12, 15,12,15,12]
 end
 
 
