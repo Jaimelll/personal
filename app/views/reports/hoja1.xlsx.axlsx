@@ -26,18 +26,18 @@ izq = style.add_style( border: Axlsx::STYLE_THIN_BORDER,
             sheet.add_row []
 
 
-                sheet.add_row %w(N NIVEL MAXIMO MINIMO),
-                                        style: [titu, titu, titu, titu], height: 40
+                sheet.add_row %w(N NIVEL MAXIMO MINIMO CANTIDAD),
+                                        style: [titu, titu, titu, titu, titu], height: 40
 
               Formula.where(product_id:10000).order('orden').each do |proce|
 
-
-            sheet.add_row [proce.orden, proce.nombre,proce.numero,proce.acti ],
-                               style: [centra, izq, soles, soles]
+             ncant=Employee.where(sele:proce.orden).count
+            sheet.add_row [proce.orden, proce.nombre,proce.numero,proce.acti,ncant ],
+                               style: [centra, izq, soles, soles,centra]
 
 
               end
-              sheet.column_widths *[5, 30, 14, 14]
+              sheet.column_widths *[5, 30, 14, 14, 10]
 
            end
 ###############
@@ -104,7 +104,7 @@ sheet.add_row [nil,tot,nil,nil,"=SUM(E3:E#{ vvccon})","=SUM(F4:F#{vvccon})",nil,
     style: [soles, centra, soles, soles, soles, soles, soles, soles]
 
 
-sheet.column_widths *[5, 30, 10, 12, 15,12,15,12]
+sheet.column_widths *[5, 45, 10, 12, 15,12,15,12]
 end
 
 
