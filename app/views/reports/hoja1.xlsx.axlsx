@@ -19,6 +19,10 @@ izq = style.add_style( border: Axlsx::STYLE_THIN_BORDER,
                                 alignment: { horizontal: :left })
 
 
+
+@nopci
+case @nopci
+    when "1"
 ##################
 
               wb.add_worksheet(name: "NIVELES") do |sheet|
@@ -29,7 +33,7 @@ izq = style.add_style( border: Axlsx::STYLE_THIN_BORDER,
                 sheet.add_row %w(N NIVEL MAXIMO MINIMO CANTIDAD),
                                         style: [titu, titu, titu, titu, titu], height: 40
 
-              Formula.where(product_id:10000).order('orden').each do |proce|
+              Formula.where(product_id:10000).order('cantidad').each do |proce|
 
              ncant=Employee.where(sele:proce.orden).count
             sheet.add_row [proce.orden, proce.nombre,proce.numero,proce.acti,ncant ],
@@ -43,7 +47,7 @@ izq = style.add_style( border: Axlsx::STYLE_THIN_BORDER,
 ###############
 
 
-wb.add_worksheet(name: "CAS activos") do |sheet|
+wb.add_worksheet(name: "CAS") do |sheet|
 
   sheet.add_row []
 
@@ -107,6 +111,45 @@ sheet.add_row [nil,tot,nil,nil,"=SUM(E3:E#{ vvccon})","=SUM(F4:F#{vvccon})",nil,
 sheet.column_widths *[5, 45, 10, 12, 15,12,15,12]
 end
 
+######################
+  when "2"
+  ###############
 
 
+  wb.add_worksheet(name: "activos") do |sheet|
+
+    sheet.add_row []
+
+    sheet.add_row %w(N NOMBRE AREA DNI VINCULO),
+    style: [titu, titu, titu, titu, titu]
+
+   @conta=0
+
+
+   Employee.where(estado:1).order('tip_tra,ape_nom').each do |emple|
+   @conta=@conta+1
+
+    varea=Formula.where(product_id:26,orden:emple.area).select('nombre as dd').first.dd
+    vinc=Formula.where(product_id:23,orden:emple.tip_tra).select('nombre as dd').first.dd
+
+
+
+     sheet.add_row [ @conta, emple.ape_nom,   varea, emple.dni, vinc ],
+     style: [centra, izq, centra, centra, izq]
+
+
+
+
+
+  end
+
+
+  sheet.column_widths *[5, 45, 10, 10, 15]
+  end
+
+  ######################
+
+
+
+  end #de case
 end

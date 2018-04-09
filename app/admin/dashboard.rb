@@ -8,10 +8,12 @@ ActiveAdmin.register_page "Dashboard" do
     case current_admin_user.categoria
 
       when 2,3
-        li  link_to "Relacion de Personal Activo", reports_vhoja1_path(format:  "xlsx")
-
+        br
+        li  link_to "Niveles de Personal CAS", reports_vhoja1_path(format:  "xlsx", :param1=> 1)
+        br
+        li  link_to "Relacion de Personal ACTIVO", reports_vhoja1_path(format:  "xlsx", :param1=> 2)
    end
-    
+
     # Here is an example of a simple dashboard with columns and panels.
     #
     # columns do
