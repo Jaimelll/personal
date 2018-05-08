@@ -10,7 +10,7 @@ permit_params :employee_id, :tipo_rela, :ape_nom,
 filter :ape_nom
 
 index :title => 'Lista de Carga Familiar' do
-  vempl1=Employee.where(correo_corp:current_admin_user.email).select('id as dd').first.dd.to_s
+  vempl1=Employee.where(correo_corp:current_admin_user.email.strip).select('id as dd').first.dd.to_s
   vempl2=params[:employee_id]
   if current_admin_user.categoria==3 or current_admin_user.categoria==2 or vempl1==vempl2 then
 
@@ -93,7 +93,7 @@ end
 
 
              sidebar "Foto" do
-               vempl1=Employee.where(correo_corp:current_admin_user.email).select('id as dd').first.dd.to_s
+               vempl1=Employee.where(correo_corp:current_admin_user.email.strip).select('id as dd').first.dd.to_s
                vempl2=params[:employee_id]
                if current_admin_user.categoria==3 or current_admin_user.categoria==2 or vempl1==vempl2 then
 

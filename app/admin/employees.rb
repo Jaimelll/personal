@@ -45,11 +45,11 @@ end
          scope :Activos, :default => true do |emples|
           case current_admin_user.categoria
             when 1
-                 emples.where(estado:1,correo_corp:current_admin_user.email)
+                 emples.where(estado:1,correo_corp:current_admin_user.email.strip)
             when 2,3
                 emples.where(estado:1)
             when 4
-                varea=Employee.where(correo_corp:current_admin_user.email).select('area as dd').first.dd
+                varea=Employee.where(correo_corp:current_admin_user.email.strip).select('area as dd').first.dd
                 emples.where(estado:1,area:varea)
             end
 
@@ -58,11 +58,11 @@ end
         scope :CAS, :default => true do |emples|
           case current_admin_user.categoria
             when 1
-               emples.where(tip_tra:1,estado:1,correo_corp:current_admin_user.email)
+               emples.where(tip_tra:1,estado:1,correo_corp:current_admin_user.email.strip)
             when 2,3
                emples.where(tip_tra:1,estado:1)
             when 4
-                varea=Employee.where(correo_corp:current_admin_user.email).select('area as dd').first.dd
+                varea=Employee.where(correo_corp:current_admin_user.email.strip).select('area as dd').first.dd
                 emples.where(tip_tra:1,estado:1,area:varea)
             end
 
@@ -72,11 +72,11 @@ end
         scope :Orden_servicio, :default => true do |emples|
           case current_admin_user.categoria
             when 1
-               emples.where(tip_tra:2,estado:1,correo_corp:current_admin_user.email)
+               emples.where(tip_tra:2,estado:1,correo_corp:current_admin_user.email.strip)
             when 2,3
                emples.where(tip_tra:2,estado:1)
             when 4
-                varea=Employee.where(correo_corp:current_admin_user.email).select('area as dd').first.dd
+                varea=Employee.where(correo_corp:current_admin_user.email.strip).select('area as dd').first.dd
                 emples.where(tip_tra:2,estado:1,area:varea)
             end
         end
@@ -85,11 +85,11 @@ end
         scope :Militares, :default => true do |emples|
           case current_admin_user.categoria
             when 1
-               emples.where(tip_tra:3,estado:1,correo_corp:current_admin_user.email)
+               emples.where(tip_tra:3,estado:1,correo_corp:current_admin_user.email.strip)
             when 2,3
                emples.where(tip_tra:3,estado:1)
             when 4
-                varea=Employee.where(correo_corp:current_admin_user.email).select('area as dd').first.dd
+                varea=Employee.where(correo_corp:current_admin_user.email.strip).select('area as dd').first.dd
                 emples.where(tip_tra:3,estado:1,area:varea)
             end
         end
@@ -101,11 +101,11 @@ end
         scope :Otros, :default => true do |emples|
           case current_admin_user.categoria
             when 1
-               emples.where(tip_tra:4,estado:1,correo_corp:current_admin_user.email)
+               emples.where(tip_tra:4,estado:1,correo_corp:current_admin_user.email.strip)
             when 2,3
                emples.where(tip_tra:4,estado:1)
             when 4
-                varea=Employee.where(correo_corp:current_admin_user.email).select('area as dd').first.dd
+                varea=Employee.where(correo_corp:current_admin_user.email.strip).select('area as dd').first.dd
                 emples.where(tip_tra:4,estado:1,area:varea)
             end
         end
@@ -117,11 +117,11 @@ end
 
             case current_admin_user.categoria
               when 1
-                   emples.where(estado:2,correo_corp:current_admin_user.email)
+                   emples.where(estado:2,correo_corp:current_admin_user.email.strip)
               when 2,3
                   emples.where(estado:2)
               when 4
-                  varea=Employee.where(correo_corp:current_admin_user.email).select('area as dd').first.dd
+                  varea=Employee.where(correo_corp:current_admin_user.email.strip).select('area as dd').first.dd
                   emples.where(estado:2,area:varea)
               end
 
@@ -132,11 +132,11 @@ end
          scope :Certificados, :default => true do |emples|
            case current_admin_user.categoria
              when 1
-                     emples.where(correo_corp:current_admin_user.email).where('vigencia IS NOT NULL and vigencia>current_date').order('ape_nom')
+                     emples.where(correo_corp:current_admin_user.email.strip).where('vigencia IS NOT NULL and vigencia>current_date').order('ape_nom')
              when 2,3
                    emples.where('vigencia IS NOT NULL and vigencia>current_date').order('ape_nom')
              when 4
-                 varea=Employee.where(correo_corp:current_admin_user.email).select('area as dd').first.dd
+                 varea=Employee.where(correo_corp:current_admin_user.email.strip).select('area as dd').first.dd
                    emples.where(area:varea).where('vigencia IS NOT NULL and vigencia>current_date').order('ape_nom')
              end
 
@@ -246,7 +246,7 @@ end
      end
 
      show :title => ' Personal'  do
-       vempl1=Employee.where(correo_corp:current_admin_user.email).select('id as dd').first.dd.to_s
+       vempl1=Employee.where(correo_corp:current_admin_user.email.strip).select('id as dd').first.dd.to_s
        vempl2=params[:id]
        if current_admin_user.categoria==3 or current_admin_user.categoria==2 or vempl1==vempl2 then
 
@@ -365,7 +365,7 @@ end
                       end
 
    sidebar "Foto", except: :index  do
-             vempl1=Employee.where(correo_corp:current_admin_user.email).select('id as dd').first.dd.to_s
+             vempl1=Employee.where(correo_corp:current_admin_user.email.strip).select('id as dd').first.dd.to_s
              vempl2=params[:id]
              if current_admin_user.categoria==3 or current_admin_user.categoria==2 or vempl1==vempl2 then
 

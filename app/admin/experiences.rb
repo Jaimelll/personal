@@ -10,7 +10,7 @@ ActiveAdmin.register Experience do
   filter :empresa
 
   index :title => 'Lista de Experiencia Laboral' do
-    vempl1=Employee.where(correo_corp:current_admin_user.email).select('id as dd').first.dd.to_s
+    vempl1=Employee.where(correo_corp:current_admin_user.email.strip).select('id as dd').first.dd.to_s
     vempl2=params[:employee_id]
     if current_admin_user.categoria==3 or current_admin_user.categoria==2 or vempl1==vempl2 then
 
@@ -69,7 +69,7 @@ ActiveAdmin.register Experience do
               
 
                sidebar "Foto" do
-                 vempl1=Employee.where(correo_corp:current_admin_user.email).select('id as dd').first.dd.to_s
+                 vempl1=Employee.where(correo_corp:current_admin_user.email.strip).select('id as dd').first.dd.to_s
                  vempl2=params[:employee_id]
                  if current_admin_user.categoria==3 or current_admin_user.categoria==2 or vempl1==vempl2 then
 
