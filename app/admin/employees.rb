@@ -458,10 +458,20 @@ end
 
 end
 end
+
    end #end de sidebar
+
 
 
 
 end
 
+sidebar "Totales", only: :index  do
+    if current_admin_user.categoria==3 or current_admin_user.categoria==2 then
+      vsac=Employee.where(estado:1).ransack(params[:q]).result.sum(:remuneracion)
+
+
+    li "Total de remuneraciones:  "+  number_to_currency(vsac, :unit => "S/ ",:precision=> 0)
+  end
+end
   end
