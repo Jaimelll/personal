@@ -176,9 +176,13 @@ end
           column("Perfil") do |emple|
             emple.grado
           end
+
+          if current_admin_user.categoria==2 or current_admin_user.categoria==3  then
           column("Remuneracion", :class => 'text-right', :sortable => :remuneracion) do |emple|
+        
           #  number_to_currency emple.remuneracion
               number_to_currency(emple.remuneracion, :unit => "S/ ",:precision=> 0)
+          end
           end
           column("area") do |emple|
                       if emple.area and emple.area>0 then
@@ -253,7 +257,7 @@ end
      show :title => ' Personal'  do
        vempl1=Employee.where(correo_corp:current_admin_user.email.strip).select('id as dd').first.dd.to_s
        vempl2=params[:id]
-       if current_admin_user.categoria==3 or current_admin_user.categoria==2 or vempl1==vempl2 then
+       if current_admin_user.categoria==3 or current_admin_user.categoria==2 or current_admin_user.categoria==4 or vempl1==vempl2 then
 
              attributes_table  do
 
