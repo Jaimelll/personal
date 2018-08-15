@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180212131711) do
+ActiveRecord::Schema.define(version: 20180815002214) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -2623,6 +2623,21 @@ ActiveRecord::Schema.define(version: 20180212131711) do
     t.index ["product_id"], name: "index_formulas_on_product_id"
   end
 
+  create_table "functions", force: :cascade do |t|
+    t.integer "employee_id", limit: 19, precision: 19
+    t.string "descripcion"
+    t.integer "activo", precision: 38
+    t.date "inicio"
+    t.date "fin"
+    t.string "sele1"
+    t.integer "sele2", precision: 38
+    t.integer "admin_user_id", limit: 19, precision: 19
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["admin_user_id"], name: "i_functions_admin_user_id"
+    t.index ["employee_id"], name: "index_functions_on_employee_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "nombre"
     t.string "descripcion"
@@ -2675,6 +2690,8 @@ ActiveRecord::Schema.define(version: 20180212131711) do
   add_foreign_key "families", "employees"
   add_foreign_key "formulas", "admin_users"
   add_foreign_key "formulas", "products"
+  add_foreign_key "functions", "admin_users"
+  add_foreign_key "functions", "employees"
   add_foreign_key "products", "admin_users"
   add_foreign_key "students", "admin_users"
   add_foreign_key "students", "employees"

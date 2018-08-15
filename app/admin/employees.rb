@@ -12,10 +12,14 @@ ActiveAdmin.register Employee do
 belongs_to :employee
 end
 
-ActiveAdmin.register Agreement do
-belongs_to :employee
-end
+  ActiveAdmin.register Agreement do
+    belongs_to :employee
+  end
 
+  ActiveAdmin.register Function do
+    belongs_to :employee
+  end
+  
 
     menu  priority: 16, label: "Personal"
 
@@ -92,6 +96,7 @@ end
                 varea=Employee.where(correo_corp:current_admin_user.email.strip).select('area as dd').first.dd
                 emples.where(tip_tra:3,estado:1,area:varea)
             end
+        
         end
 
 
@@ -268,9 +273,7 @@ end
                 emple.grado
               end
 
-              row 'Puesto' do |emple|
-                emple.cargo
-              end
+              row :direccion
               row :distrito
               row :telefono
               row 'Numero de anexo' do |emple|
@@ -385,10 +388,11 @@ end
                   li      link_to "CARGA FAMILIAR", admin_employee_families_path(params[:id])
                   li      link_to "ESTUDIOS", admin_employee_students_path(params[:id])
                   li      link_to "EXPERIENCIA LABORAL", admin_employee_experiences_path(params[:id])
+                  li      link_to "FUNCIONES", admin_employee_functions_path(params[:id])                  
                   if current_admin_user.categoria==3 or current_admin_user.categoria==2 then
                   li      link_to "CONTRATOS", admin_employee_agreements_path(params[:id])
                   end
-
+                  
                            end
              end
 if current_admin_user.categoria==3 or current_admin_user.categoria==2 then

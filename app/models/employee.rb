@@ -6,6 +6,7 @@ mount_uploader :foto, FotoUploader
  has_many :students
  has_many :experiences
  has_many :agreements
+ has_many :functions
 
   validates :ape_pat, presence: true
   validates :ape_mat, presence: true
