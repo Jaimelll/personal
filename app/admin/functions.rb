@@ -4,7 +4,7 @@ ActiveAdmin.register Function do
     menu false
     
     permit_params :employee_id, :descripcion, :activo,
-         :inicio, :fin, :sele1, :sele2, :admin_user_id
+         :inicio, :fin, :sele1, :admin_user_id, :sele2
     
     
     filter :descripcion
