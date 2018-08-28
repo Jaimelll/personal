@@ -10,7 +10,17 @@ ActiveAdmin.register Function do
     filter :descripcion
     
     index :title => 'Lista de Funciones' do
+
+           column("Tipo de funcion", :sortable => :sele2) do |func|      
       
+              if func.sele2 and func.sele2>0 then
+
+                  Formula.where(product_id:10020, orden:func.sele2).
+                        select('nombre as dd').first.dd
+
+
+              end
+            end          
             column("descripcion")
             
     
@@ -23,7 +33,8 @@ ActiveAdmin.register Function do
     
              f.inputs  do
     
-    
+              f.input :sele2,:label => 'Tipo de Funcion', :as => :select, :collection =>
+              Formula.where(product_id:10020).order('orden').map{|u| [u.nombre, u.orden]}    
                f.input :descripcion  ###, :input_html => { :style =>  'width:30%'}
                f.input :admin_user_id, :input_html => { :value => current_admin_user.id }, :as => :hidden
     
@@ -39,7 +50,15 @@ ActiveAdmin.register Function do
     
                    attributes_table  do
     
-    
+                    row "Tipo de Funcion" do |func|
+                      if func.sele2 and func.sele2>0 then
+
+                         vnn=Formula.where(product_id:10020, orden:func.sele2).
+                          select('nombre as dd').first.dd
+                          link_to vnn, admin_employee_functions_path(params[:employee_id])
+
+                        end
+                    end    
     
     
                     row :descripcion
