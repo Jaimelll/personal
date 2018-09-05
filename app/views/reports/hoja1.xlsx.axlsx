@@ -18,6 +18,8 @@ centra = style.add_style( border: Axlsx::STYLE_THIN_BORDER,
 izq = style.add_style( border: Axlsx::STYLE_THIN_BORDER,
                                 alignment: { horizontal: :left })
 
+desc = style.add_style( border: Axlsx::STYLE_THIN_BORDER,
+                              alignment: { horizontal: :left ,vertical: :center, wrap_text: :true},sz: 7)
 
 
 @nopci
@@ -148,7 +150,60 @@ end
   end
 
   ######################
+  when "3"
+  ###############
 
+
+  wb.add_worksheet(name: "funciones") do |sheet|
+
+Formula.where(product_id:26).order('orden').each do |warea|
+    sheet.add_row []
+
+ sheet.add_row [warea.descripcion]
+
+    sheet.add_row %w(N NOMBRE VINCULO),
+    style: [titu, titu, titu  ]
+
+   @conta=0
+
+
+   Employee.where(estado:1,area:warea.orden).order('tip_tra,ape_nom').each do |emple|
+   @conta=@conta+1
+
+    varea=Formula.where(product_id:26,orden:emple.area).select('nombre as dd').first.dd
+    vinc=Formula.where(product_id:23,orden:emple.tip_tra).select('nombre as dd').first.dd
+
+
+
+     sheet.add_row [ @conta, emple.ape_nom, vinc ],
+     style: [centra, izq, izq]
+
+      vfunc=Function.where(employee_id:emple.id).order('id DESC')
+      if vfunc.count>0 then
+      sheet.add_row [ nil, nil,nil,"TIPO","DESCRIPCION"],
+                    style: [nil,nil,nil,titu,titu]
+       vfunc.each do |vfuncion|
+
+        vtipo= Formula.where(product_id:10020, orden:vfuncion.sele2)
+         if vtipo.count>0 then
+             vtipo1= vtipo.select('nombre as dd').first.dd
+         else
+              vtipo1=''
+         end
+
+         sheet.add_row [ nil,nil,nil,vtipo1,vfuncion.descripcion],
+           style: [nil,nil,nil,centra,desc]
+
+       end #each
+     end
+
+  end
+  end
+
+  sheet.column_widths *[5, 45, 15,10,80]
+  end
+
+  ######################
 
 
   end #de case
