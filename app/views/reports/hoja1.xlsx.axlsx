@@ -178,10 +178,10 @@ Formula.where(product_id:26).order('orden').each do |warea|
      sheet.add_row [ @conta, emple.ape_nom, vinc ],
      style: [centra, izq, izq]
 
-      vfunc=Function.where(employee_id:emple.id).order('id DESC')
+      vfunc=Function.where(employee_id:emple.id).order('activo,id DESC')
       if vfunc.count>0 then
-      sheet.add_row [ nil, nil,nil,"TIPO","DESCRIPCION"],
-                    style: [nil,nil,nil,titu,titu]
+      sheet.add_row [ nil, nil,nil,"ORDEN","TIPO","DESCRIPCION"],
+                    style: [nil,nil,nil,titu,titu,titu]
        vfunc.each do |vfuncion|
 
         vtipo= Formula.where(product_id:10020, orden:vfuncion.sele2)
@@ -191,8 +191,8 @@ Formula.where(product_id:26).order('orden').each do |warea|
               vtipo1=''
          end
 
-         sheet.add_row [ nil,nil,nil,vtipo1,vfuncion.descripcion],
-           style: [nil,nil,nil,centra,desc]
+         sheet.add_row [ nil,nil,nil,vfuncion.activo,vtipo1,vfuncion.descripcion],
+           style: [nil,nil,nil,centra,centra,desc]
 
        end #each
      end
@@ -200,7 +200,7 @@ Formula.where(product_id:26).order('orden').each do |warea|
   end
   end
 
-  sheet.column_widths *[5, 45, 15,10,80]
+  sheet.column_widths *[5, 45, 15,10,15,80]
   end
 
   ######################

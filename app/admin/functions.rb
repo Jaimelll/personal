@@ -10,7 +10,9 @@ ActiveAdmin.register Function do
     filter :descripcion
     
     index :title => 'Lista de Funciones' do
-
+           column("Orden", :sortable => :activo) do |func|  
+            func.activo
+           end
            column("Tipo de funcion", :sortable => :sele2) do |func|      
       
               if func.sele2 and func.sele2>0 then
@@ -32,7 +34,7 @@ ActiveAdmin.register Function do
     
     
              f.inputs  do
-    
+              f.input :activo ,:label => 'Orden', :input_html => { :style =>  'width:30%'}    
               f.input :sele2,:label => 'Tipo de Funcion', :as => :select, :collection =>
               Formula.where(product_id:10020).order('orden').map{|u| [u.nombre, u.orden]}    
                f.input :descripcion  ###, :input_html => { :style =>  'width:30%'}
@@ -50,6 +52,10 @@ ActiveAdmin.register Function do
     
                    attributes_table  do
     
+                    row "Orden" do |func|
+                      func.activo
+                     end    
+                      
                     row "Tipo de Funcion" do |func|
                       if func.sele2 and func.sele2>0 then
 
