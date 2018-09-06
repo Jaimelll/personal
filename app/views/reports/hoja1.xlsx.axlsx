@@ -202,7 +202,7 @@ Formula.where(product_id:26).order('orden').each do |warea|
      end
 
   end
-  sheet.column_widths *[5, 45, 15,10,15,80]
+  sheet.column_widths *[5, 45, 15,6,6,80]
   end
 
   
