@@ -154,9 +154,13 @@ end
   ###############
 
 
-  wb.add_worksheet(name: "funciones") do |sheet|
+ 
 
 Formula.where(product_id:26).order('orden').each do |warea|
+
+ wb.add_worksheet(name: warea.nombre) do |sheet|
+
+
     sheet.add_row []
 
  sheet.add_row [warea.descripcion]
@@ -167,7 +171,7 @@ Formula.where(product_id:26).order('orden').each do |warea|
    @conta=0
 
 
-   Employee.where(estado:1,area:warea.orden).order('tip_tra,ape_nom').each do |emple|
+   Employee.where(estado:1,area:warea.orden).order('ape_nom').each do |emple|
    @conta=@conta+1
 
     varea=Formula.where(product_id:26,orden:emple.area).select('nombre as dd').first.dd
@@ -198,9 +202,10 @@ Formula.where(product_id:26).order('orden').each do |warea|
      end
 
   end
+  sheet.column_widths *[5, 45, 15,10,15,80]
   end
 
-  sheet.column_widths *[5, 45, 15,10,15,80]
+  
   end
 
   ######################
