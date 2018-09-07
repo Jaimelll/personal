@@ -6,6 +6,10 @@ titu = style.add_style( border: Axlsx::STYLE_THIN_BORDER,
                                  alignment: { horizontal: :center,vertical: :center, wrap_text: :true },
                                 b: true, sz: 8, bg_color: "C1C1C1")
 
+titu1 = style.add_style( border: Axlsx::STYLE_THIN_BORDER,
+                                 alignment: { horizontal: :center,vertical: :center, wrap_text: :true },
+                                b: true, sz: 10,:bg_color => "585858", :fg_color=>"FFFFFF")                                
+
 soles = style.add_style(border: Axlsx::STYLE_THIN_BORDER,
                            alignment: { horizontal: :center },num_fmt: 8)
 
@@ -15,11 +19,25 @@ fechas = style.add_style(format_code: "mm-yyyy", border: Axlsx::STYLE_THIN_BORDE
 centra = style.add_style( border: Axlsx::STYLE_THIN_BORDER,
                                alignment: { horizontal: :center })
 
+centra1 = style.add_style( border: Axlsx::STYLE_THIN_BORDER,sz: 10,:bg_color => "BDBDBD",
+                               alignment: { horizontal: :center })                               
+
 izq = style.add_style( border: Axlsx::STYLE_THIN_BORDER,
                                 alignment: { horizontal: :left })
 
+izq1 = style.add_style( border: Axlsx::STYLE_THIN_BORDER,sz: 10,:bg_color => "BDBDBD",
+                                alignment: { horizontal: :left })                                
+
 desc = style.add_style( border: Axlsx::STYLE_THIN_BORDER,
                               alignment: { horizontal: :left ,vertical: :center, wrap_text: :true},sz: 7)
+
+desca = style.add_style( border: Axlsx::STYLE_THIN_BORDER,
+                              alignment: { horizontal: :left ,vertical: :center, wrap_text: :true},sz: 8)
+
+descb = style.add_style( border: Axlsx::STYLE_THIN_BORDER,
+                              alignment: { horizontal: :center ,vertical: :center, wrap_text: :true},sz: 8)
+
+
 
 
 @nopci
@@ -163,10 +181,10 @@ Formula.where(product_id:26).order('orden').each do |warea|
 
     sheet.add_row []
 
- sheet.add_row [warea.descripcion]
-
+ sheet.add_row [warea.descripcion.upcase]
+ sheet.add_row []
     sheet.add_row %w(N NOMBRE VINCULO),
-    style: [titu, titu, titu  ]
+    style: [titu1, titu1, titu1  ]
 
    @conta=0
 
@@ -180,12 +198,12 @@ Formula.where(product_id:26).order('orden').each do |warea|
 
 
      sheet.add_row [ @conta, emple.ape_nom, vinc ],
-     style: [centra, izq, izq]
+     style: [centra1, izq1, centra1]
 
       vfunc=Function.where(employee_id:emple.id).order('activo,id DESC')
       if vfunc.count>0 then
-      sheet.add_row [ nil, nil,nil,"ORDEN","TIPO","DESCRIPCION"],
-                    style: [nil,nil,nil,titu,titu,titu]
+#      sheet.add_row [ nil, nil,nil,"ORDEN","TIPO","DESCRIPCION"],
+#                    style: [nil,nil,nil,titu,titu,titu]
        vfunc.each do |vfuncion|
 
         vtipo= Formula.where(product_id:10020, orden:vfuncion.sele2)
@@ -195,14 +213,14 @@ Formula.where(product_id:26).order('orden').each do |warea|
               vtipo1=''
          end
 
-         sheet.add_row [ nil,nil,nil,vfuncion.activo,vtipo1,vfuncion.descripcion],
-           style: [nil,nil,nil,centra,centra,desc]
+         sheet.add_row [ vtipo1,vfuncion.descripcion],
+           style: [descb,desca], :height => 36
 
        end #each
      end
 
   end
-  sheet.column_widths *[5, 45, 15,6,6,80]
+  sheet.column_widths *[5, 60, 10]
   end
 
   
