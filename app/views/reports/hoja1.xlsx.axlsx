@@ -11,7 +11,11 @@ titu1 = style.add_style( border: Axlsx::STYLE_THIN_BORDER,
                                 b: true, sz: 10,:bg_color => "585858", :fg_color=>"FFFFFF")                                
 
 soles = style.add_style(border: Axlsx::STYLE_THIN_BORDER,
-                           alignment: { horizontal: :center },num_fmt: 8)
+                           alignment: { horizontal: :center ,vertical: :center},num_fmt: 3)
+
+soles1 = style.add_style(border: Axlsx::STYLE_THIN_BORDER,:bg_color => "BDBDBD",
+                           alignment: { horizontal: :center ,vertical: :center},num_fmt: 3)
+
 
 fechas = style.add_style(format_code: "mm-yyyy", border: Axlsx::STYLE_THIN_BORDER,
                         alignment: { horizontal: :center })
@@ -181,15 +185,23 @@ Formula.where(product_id:26).order('orden').each do |warea|
 
     sheet.add_row []
 
+ vem=Employee.where(estado:1,area:warea.orden)
+ cvem=vem.count
+ svem=vem.sum('remuneracion')
  sheet.add_row [warea.descripcion.upcase]
  sheet.add_row []
-    sheet.add_row %w(N NOMBRE VINCULO),
-    style: [titu1, titu1, titu1  ]
+ sheet.add_row [nil,"CANTIDAD DE PERSONAL=",cvem],
+    style: [nil,centra,soles  ]
+ sheet.add_row [nil,"TOTAL REMUNERACIONES=",svem],
+     style: [nil,centra,soles  ]
+ sheet.add_row []
+    sheet.add_row %w(N NOMBRE VINCULO REMUNERACIÒN),
+    style: [titu1, titu1, titu1, titu1  ]
 
    @conta=0
 
 
-   Employee.where(estado:1,area:warea.orden).order('ape_nom').each do |emple|
+   vem.order('ape_nom').each do |emple|
    @conta=@conta+1
 
     varea=Formula.where(product_id:26,orden:emple.area).select('nombre as dd').first.dd
@@ -197,8 +209,8 @@ Formula.where(product_id:26).order('orden').each do |warea|
 
 
 
-     sheet.add_row [ @conta, emple.ape_nom, vinc ],
-     style: [centra1, izq1, centra1]
+     sheet.add_row [ @conta, emple.ape_nom, vinc,emple.remuneracion ],
+     style: [centra1, izq1, centra1, soles1]
 
       vfunc=Function.where(employee_id:emple.id).order('activo,id DESC')
       if vfunc.count>0 then
@@ -220,7 +232,7 @@ Formula.where(product_id:26).order('orden').each do |warea|
      end
 
   end
-  sheet.column_widths *[5, 60, 10]
+  sheet.column_widths *[5, 60, 13,14]
   end
 
   
