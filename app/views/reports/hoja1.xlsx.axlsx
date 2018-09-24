@@ -186,14 +186,30 @@ Formula.where(product_id:26).order('orden').each do |warea|
     sheet.add_row []
 
  vem=Employee.where(estado:1,area:warea.orden)
+ vet=Employee.where(estado:1)
+ 
  cvem=vem.count
+ cvet=vet.count
+
  svem=vem.sum('remuneracion')
+ svet=vet.sum('remuneracion')
+
+if svet>0 then
+  vpor1=svem*100/svet
+  vpor2=cvem*100/cvet
+ else
+   vpor1=0
+   vpor2=0
+ end
+
  sheet.add_row [warea.descripcion.upcase]
  sheet.add_row []
- sheet.add_row [nil,"CANTIDAD DE PERSONAL=",cvem],
-    style: [nil,centra,soles  ]
- sheet.add_row [nil,"TOTAL REMUNERACIONES=",svem],
-     style: [nil,centra,soles  ]
+ sheet.add_row [nil,nil,warea.nombre,"TOTAL","%"],
+                 style: [nil,nil,titu1,titu1,titu1 ]
+ sheet.add_row [nil,"CANTIDAD DE PERSONAL=",cvem,cvet,vpor2.to_i],
+    style: [nil,centra,soles ,soles,centra ]
+ sheet.add_row [nil,"TOTAL REMUNERACIONES=",svem,svet,vpor1.to_i],
+     style: [nil,centra,soles,soles,centra  ]
  sheet.add_row []
     sheet.add_row %w(N NOMBRE VINCULO REMUNERACIÒN),
     style: [titu1, titu1, titu1, titu1  ]
@@ -232,7 +248,7 @@ Formula.where(product_id:26).order('orden').each do |warea|
      end
 
   end
-  sheet.column_widths *[5, 60, 13,14]
+  sheet.column_widths *[5, 60, 13,14,7]
   end
 
   
