@@ -9,9 +9,9 @@ ActiveAdmin.register_page "Dashboard" do
 
       when 2,3
         br
-        li  link_to "Niveles de Personal CAS", reports_vhoja1_path(format:  "xlsx", :param1=> 1)
+     #    li  link_to "Niveles de Personal CAS", reports_vhoja1_path(format:  "xlsx", :param1=> 1)
         br
-        li  link_to "Relacion de Personal ACTIVO", reports_vhoja1_path(format:  "xlsx", :param1=> 2)
+        li  link_to "Relacion de Personal CAS ACTIVO", reports_vhoja1_path(format:  "xlsx", :param1=> 2)
         br
         li  link_to "Funciones", reports_vhoja1_path(format:  "xlsx", :param1=> 3)
       end

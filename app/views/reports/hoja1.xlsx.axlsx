@@ -144,22 +144,48 @@ end
 
     sheet.add_row []
 
-    sheet.add_row %w(N NOMBRE AREA DNI VINCULO),
-    style: [titu, titu, titu, titu, titu]
+    sheet.add_row %w(N APE_PATERNO APE_MATERNO NOMBRES DNI ESTADO_CIVIL AFP INGRESO PROFESION 
+    DIRECION DISTRITO TELEFONO EMAIL AREA),
+    style: [titu, titu, titu, titu, titu, titu, titu, titu, titu, titu, titu, 
+            titu, titu, titu, titu, titu, titu, titu]
 
    @conta=0
 
 
-   Employee.where(estado:1).order('tip_tra,ape_nom').each do |emple|
+   Employee.where(estado:1,tip_tra:1).order('tip_tra,ape_nom').each do |emple|
    @conta=@conta+1
 
-    varea=Formula.where(product_id:26,orden:emple.area).select('nombre as dd').first.dd
-    vinc=Formula.where(product_id:23,orden:emple.tip_tra).select('nombre as dd').first.dd
+    varea1=Formula.where(product_id:26,orden:emple.area)
+    if varea1.count>0 then
+        varea=varea1.select('descripcion as dd').first.dd
+    else
+        varea="s/d"
+    end
 
+    vecivil1=Formula.where(product_id:24,orden:emple.esta_civil)
+    if vecivil1.count>0 then
+        vecivil=vecivil1.select('nombre as dd').first.dd
+    else
+        vecivil="s/d"
+    end
 
+    vafp1=Formula.where(product_id:30,orden:emple.afp)
+    if vafp1.count>0 then
+        vafp=vafp1.select('nombre as dd').first.dd
+    else
+        vafp="s/d"
+    end
+    if emple.fec_inicon then
+       vfing=emple.fec_inicon.strftime("%d-%m-%Y")
+    else
+       vfing="s/d"
+    end
 
-     sheet.add_row [ @conta, emple.ape_nom,   varea, emple.dni, vinc ],
-     style: [centra, izq, centra, centra, izq]
+     sheet.add_row [ @conta, emple.ape_pat, emple.ape_mat, emple.nombres,
+     " "+emple.dni,vecivil,vafp,vfing,emple.grado,emple.direccion,emple.distrito,
+     emple.telefono,emple.correo,varea],
+     style: [centra, izq,izq, izq,centra,centra,centra,centra,izq,izq,izq,centra,
+     izq,izq]
 
 
 
@@ -168,7 +194,7 @@ end
   end
 
 
-  sheet.column_widths *[5, 45, 10, 10, 15]
+  sheet.column_widths *[5,20,20,30,10,15,15,15,50,50,30,20,40,40]
   end
 
   ######################
