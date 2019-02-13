@@ -221,6 +221,9 @@ end
          f.input :celular_corp,:label => 'Celular Corporativo', :input_html => { :style =>  'width:30%'}
          f.input :correo, :input_html => { :style =>  'width:30%'}
          f.input :correo_corp, :input_html => { :style =>  'width:30%'}
+         f.input :afp,:label => 'AFP', :as => :select, :collection =>
+         Formula.where(product_id:30).order('nombre').map{|u| [u.nombre, u.orden]}
+
          f.input :cargo,:label => 'Puesto', :input_html => { :style =>  'width:30%'}
          f.input :grado,:label => 'Perfil', :input_html => { :style =>  'width:30%'}
 
