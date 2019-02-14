@@ -139,8 +139,8 @@ end
   when "2"
   ###############
 
-
-  wb.add_worksheet(name: "activos") do |sheet|
+Formula.where(product_id:23).order('orden').where('orden=1 or orden=3').each do |tipotrab|
+  wb.add_worksheet(name: tipotrab.nombre) do |sheet|
 
     sheet.add_row []
 
@@ -152,7 +152,7 @@ end
    @conta=0
 
 
-   Employee.where(estado:1,tip_tra:1).order('tip_tra,ape_nom').each do |emple|
+   Employee.where(estado:1,tip_tra:tipotrab.orden).order('ape_nom').each do |emple|
    @conta=@conta+1
 
     varea1=Formula.where(product_id:26,orden:emple.area)
@@ -196,7 +196,7 @@ end
 
   sheet.column_widths *[5,20,20,30,10,15,15,15,50,50,30,20,40,40]
   end
-
+ end
   ######################
   when "3"
   ###############
