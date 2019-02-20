@@ -145,9 +145,11 @@ Formula.where(product_id:23).order('orden').where('orden=1 or orden=3').each do 
     sheet.add_row []
 
     sheet.add_row %w(N APE_PATERNO APE_MATERNO NOMBRES DNI ESTADO_CIVIL AFP INGRESO PROFESION 
-    DIRECION DISTRITO TELEFONO EMAIL AREA CARGO REMUNERACIÒN NIVEL NACIMIENTO TERMINO_CONTRATO),
+    DIRECION DISTRITO TELEFONO EMAIL AREA CARGO REMUNERACIÒN NIVEL NACIMIENTO TERMINO_CONTRATO
+    FUNCION_1 FUNCION_2 FUNCION_3 FUNCION_4 FUNCION_5 FUNCION_6 FUNCION_7 FUNCION_8 FUNCION_9),
     style: [titu, titu, titu, titu, titu, titu, titu, titu, titu, titu, titu, 
-            titu, titu, titu, titu, titu, titu, titu, titu, titu, titu, titu, titu]
+            titu, titu, titu, titu, titu, titu, titu, titu, titu, titu, titu,
+            titu, titu, titu, titu, titu, titu, titu, titu,titu, titu]
 
    @conta=0
 
@@ -200,13 +202,79 @@ Formula.where(product_id:23).order('orden').where('orden=1 or orden=3').each do 
     end
 
 
+    vfun11=Function.where(activo:1,employee_id:emple.id)
+    if vfun11.count>0 then
+        vfun1=vfun11.select('descripcion as dd').first.dd
+    else
+        vfun1="s/d"
+    end   
+
+    vfun12=Function.where(activo:2,employee_id:emple.id)
+    if vfun12.count>0 then
+        vfun2=vfun12.select('descripcion as dd').first.dd
+    else
+        vfun2="s/d"
+    end    
+
+        vfun13=Function.where(activo:3,employee_id:emple.id)
+    if vfun13.count>0 then
+        vfun3=vfun13.select('descripcion as dd').first.dd
+    else
+        vfun3="s/d"
+    end    
+
+        vfun14=Function.where(activo:4,employee_id:emple.id)
+    if vfun14.count>0 then
+        vfun4=vfun14.select('descripcion as dd').first.dd
+    else
+        vfun4="s/d"
+    end    
+
+        vfun15=Function.where(activo:5,employee_id:emple.id)
+    if vfun15.count>0 then
+        vfun5=vfun15.select('descripcion as dd').first.dd
+    else
+        vfun5="s/d"
+    end    
+
+        vfun16=Function.where(activo:6,employee_id:emple.id)
+    if vfun16.count>0 then
+        vfun6=vfun16.select('descripcion as dd').first.dd
+    else
+        vfun6="s/d"
+    end    
+
+        vfun17=Function.where(activo:7,employee_id:emple.id)
+    if vfun17.count>0 then
+        vfun7=vfun17.select('descripcion as dd').first.dd
+    else
+        vfun7="s/d"
+    end    
+
+        vfun18=Function.where(activo:8,employee_id:emple.id)
+    if vfun18.count>0 then
+        vfun8=vfun18.select('descripcion as dd').first.dd
+    else
+        vfun8="s/d"
+    end    
+
+        vfun19=Function.where(activo:9,employee_id:emple.id)
+    if vfun19.count>0 then
+        vfun9=vfun19.select('descripcion as dd').first.dd
+    else
+        vfun9="s/d"
+    end    
+
+
+
+
 
      sheet.add_row [ @conta, emple.ape_pat, emple.ape_mat, emple.nombres,
      " "+emple.dni,vecivil,vafp,vfing,emple.grado,emple.direccion,emple.distrito,
      emple.telefono,emple.correo,varea,emple.cargo, emple.remuneracion,vniv1,
-     vfnac,vfter],
+     vfnac,vfter,vfun1,vfun2,vfun3,vfun4,vfun5,vfun6,vfun7,vfun8,vfun9],
      style: [centra, izq,izq, izq,centra,centra,centra,centra,izq,izq,izq,centra,
-     izq,izq,  izq,soles,izq,centra,centra]
+     izq,izq,  izq,soles,izq,centra,centra,desc,desc,desc,desc,desc,desc,desc,desc,desc]
 
 
 
@@ -216,7 +284,7 @@ Formula.where(product_id:23).order('orden').where('orden=1 or orden=3').each do 
 
 
   sheet.column_widths *[5,20,20,30,10,15,15,15,50,50,30,20,40,40,
-                   45,15,20,15,20]
+                   45,15,20,15,20,30,30,30,30,30,30,30,30,30]
   end
  end
   ######################
