@@ -146,10 +146,12 @@ Formula.where(product_id:23).order('orden').where('orden=1 or orden=3').each do 
 
     sheet.add_row %w(N APE_PATERNO APE_MATERNO NOMBRES DNI ESTADO_CIVIL AFP INGRESO PROFESION 
     DIRECION DISTRITO TELEFONO EMAIL AREA CARGO REMUNERACIÒN NIVEL NACIMIENTO TERMINO_CONTRATO
-    FUNCION_1 FUNCION_2 FUNCION_3 FUNCION_4 FUNCION_5 FUNCION_6 FUNCION_7 FUNCION_8 FUNCION_9),
+    FUNCION_1 FUNCION_2 FUNCION_3 FUNCION_4 FUNCION_5 FUNCION_6 FUNCION_7 FUNCION_8 FUNCION_9
+    ESTUDIO_1 ESTUDIO_2 ESTUDIO_3),
     style: [titu, titu, titu, titu, titu, titu, titu, titu, titu, titu, titu, 
             titu, titu, titu, titu, titu, titu, titu, titu, titu, titu, titu,
-            titu, titu, titu, titu, titu, titu, titu, titu,titu, titu]
+            titu, titu, titu, titu, titu, titu, titu, titu,titu, 
+            titu, titu,titu, titu]
 
    @conta=0
 
@@ -265,6 +267,33 @@ Formula.where(product_id:23).order('orden').where('orden=1 or orden=3').each do 
         vfun9="s/d"
     end    
 
+        estu11=Student.where(employee_id:emple.id).order('id')
+        vconest=0
+        vstud1="s/d "
+        vstud2="s/d "
+        vstud3="s/d "
+    if  estu11.count>0 then
+        estu11.each do |estud| 
+         vconest=vconest+1
+         case vconest
+            when 1
+               if estud.centro and estud.especialidad and estud.grado then
+                 vstud1=estud.centro+"/"+estud.especialidad+"/"+estud.grado
+               end
+            when 2
+               if estud.centro and estud.especialidad and estud.grado then
+                 vstud2=estud.centro+"/"+estud.especialidad+"/"+estud.grado
+               end
+            when 3
+               if estud.centro and estud.especialidad and estud.grado then
+                 vstud3=estud.centro+"/"+estud.especialidad+"/"+estud.grado
+               end
+         end
+      end
+    end
+
+
+
 
 
 
@@ -272,9 +301,11 @@ Formula.where(product_id:23).order('orden').where('orden=1 or orden=3').each do 
      sheet.add_row [ @conta, emple.ape_pat, emple.ape_mat, emple.nombres,
      " "+emple.dni,vecivil,vafp,vfing,emple.grado,emple.direccion,emple.distrito,
      emple.telefono,emple.correo,varea,emple.cargo, emple.remuneracion,vniv1,
-     vfnac,vfter,vfun1,vfun2,vfun3,vfun4,vfun5,vfun6,vfun7,vfun8,vfun9],
+     vfnac,vfter,vfun1,vfun2,vfun3,vfun4,vfun5,vfun6,vfun7,vfun8,vfun9,
+     vstud1,vstud2,vstud3],
      style: [centra, izq,izq, izq,centra,centra,centra,centra,izq,izq,izq,centra,
-     izq,izq,  izq,soles,izq,centra,centra,desc,desc,desc,desc,desc,desc,desc,desc,desc]
+     izq,izq,  izq,soles,izq,centra,centra,desc,desc,desc,desc,desc,desc,desc,
+     desc,desc,desc,desc,desc], :height => 27
 
 
 
@@ -284,7 +315,7 @@ Formula.where(product_id:23).order('orden').where('orden=1 or orden=3').each do 
 
 
   sheet.column_widths *[5,20,20,30,10,15,15,15,50,50,30,20,40,40,
-                   45,15,20,15,20,30,30,30,30,30,30,30,30,30]
+                   45,15,20,15,20,30,30,30,30,30,30,30,30,30,40,40,40]
   end
  end
   ######################
