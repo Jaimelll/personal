@@ -145,9 +145,9 @@ Formula.where(product_id:23).order('orden').where('orden=1 or orden=3').each do 
     sheet.add_row []
 
     sheet.add_row %w(N APE_PATERNO APE_MATERNO NOMBRES DNI ESTADO_CIVIL AFP INGRESO PROFESION 
-    DIRECION DISTRITO TELEFONO EMAIL AREA),
+    DIRECION DISTRITO TELEFONO EMAIL AREA CARGO REMUNERACIÒN NIVEL NACIMIENTO TERMINO_CONTRATO),
     style: [titu, titu, titu, titu, titu, titu, titu, titu, titu, titu, titu, 
-            titu, titu, titu, titu, titu, titu, titu]
+            titu, titu, titu, titu, titu, titu, titu, titu, titu, titu, titu, titu]
 
    @conta=0
 
@@ -181,11 +181,32 @@ Formula.where(product_id:23).order('orden').where('orden=1 or orden=3').each do 
        vfing="s/d"
     end
 
+    if emple.fec_nacimiento then
+       vfnac=emple.fec_nacimiento.strftime("%d-%m-%Y")
+    else
+       vfnac="s/d"
+    end
+
+    if emple.fec_tercon then
+       vfter=emple.fec_tercon.strftime("%d-%m-%Y")
+    else
+       vfter="s/d"
+    end
+      vniv=Formula.where(product_id:10000,orden:emple.sele)
+    if vniv.count>0 then
+        vniv1=vniv.select('nombre as dd').first.dd
+    else
+        vniv1="s/d"
+    end
+
+
+
      sheet.add_row [ @conta, emple.ape_pat, emple.ape_mat, emple.nombres,
      " "+emple.dni,vecivil,vafp,vfing,emple.grado,emple.direccion,emple.distrito,
-     emple.telefono,emple.correo,varea],
+     emple.telefono,emple.correo,varea,emple.cargo, emple.remuneracion,vniv1,
+     vfnac,vfter],
      style: [centra, izq,izq, izq,centra,centra,centra,centra,izq,izq,izq,centra,
-     izq,izq]
+     izq,izq,  izq,soles,izq,centra,centra]
 
 
 
@@ -194,7 +215,8 @@ Formula.where(product_id:23).order('orden').where('orden=1 or orden=3').each do 
   end
 
 
-  sheet.column_widths *[5,20,20,30,10,15,15,15,50,50,30,20,40,40]
+  sheet.column_widths *[5,20,20,30,10,15,15,15,50,50,30,20,40,40,
+                   45,15,20,15,20]
   end
  end
   ######################
