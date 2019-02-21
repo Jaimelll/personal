@@ -147,11 +147,11 @@ Formula.where(product_id:23).order('orden').where('orden=1 or orden=3').each do 
     sheet.add_row %w(N APE_PATERNO APE_MATERNO NOMBRES DNI ESTADO_CIVIL AFP INGRESO PROFESION 
     DIRECION DISTRITO TELEFONO EMAIL AREA CARGO REMUNERACIÒN NIVEL NACIMIENTO TERMINO_CONTRATO
     FUNCION_1 FUNCION_2 FUNCION_3 FUNCION_4 FUNCION_5 FUNCION_6 FUNCION_7 FUNCION_8 FUNCION_9
-    ESTUDIO_1 ESTUDIO_2 ESTUDIO_3),
+    ESTUDIO_1 ESTUDIO_2 ESTUDIO_3 EXPERIENCIA_1 EXPERIENCIA_2 EXPERIENCIA_3),
     style: [titu, titu, titu, titu, titu, titu, titu, titu, titu, titu, titu, 
             titu, titu, titu, titu, titu, titu, titu, titu, titu, titu, titu,
             titu, titu, titu, titu, titu, titu, titu, titu,titu, 
-            titu, titu,titu, titu]
+            titu, titu,titu, titu, titu,titu, titu]
 
    @conta=0
 
@@ -278,15 +278,41 @@ Formula.where(product_id:23).order('orden').where('orden=1 or orden=3').each do 
          case vconest
             when 1
                if estud.centro and estud.especialidad and estud.grado then
-                 vstud1=estud.centro+"/"+estud.especialidad+"/"+estud.grado
+                 vstud1=estud.centro+" / "+estud.especialidad+" / "+estud.grado
                end
             when 2
                if estud.centro and estud.especialidad and estud.grado then
-                 vstud2=estud.centro+"/"+estud.especialidad+"/"+estud.grado
+                 vstud2=estud.centro+" / "+estud.especialidad+" / "+estud.grado
                end
             when 3
                if estud.centro and estud.especialidad and estud.grado then
-                 vstud3=estud.centro+"/"+estud.especialidad+"/"+estud.grado
+                 vstud3=estud.centro+" / "+estud.especialidad+" / "+estud.grado
+               end
+         end
+      end
+    end
+  
+
+        exper11=Experience.where(employee_id:emple.id).order('id')
+        vconexp=0
+        vexpe1="s/d "
+        vexpe2="s/d "
+        vexpe3="s/d "
+    if  exper11.count>0 then
+        exper11.each do |experiencia| 
+         vconexp=vconexp+1
+         case vconexp
+            when 1
+               if experiencia.empresa and experiencia.cargo and experiencia.desde and experiencia.hasta then
+                 vexpe1=experiencia.empresa+" / "+experiencia.cargo+" / "+" del "+experiencia.desde.strftime("%m-%Y")+" al " +experiencia.hasta.strftime("%m-%Y")
+               end
+            when 2
+               if experiencia.empresa and experiencia.cargo and experiencia.desde and experiencia.hasta then
+                 vexpe2=experiencia.empresa+" / "+experiencia.cargo+" / "+" del "+experiencia.desde.strftime("%m-%Y")+" al " +experiencia.hasta.strftime("%m-%Y")
+               end
+            when 3
+               if experiencia.empresa and experiencia.cargo and experiencia.desde and experiencia.hasta then
+                 vexpe3=experiencia.empresa+" / "+experiencia.cargo+" / "+" del "+experiencia.desde.strftime("%m-%Y")+" al " +experiencia.hasta.strftime("%m-%Y")
                end
          end
       end
@@ -298,14 +324,17 @@ Formula.where(product_id:23).order('orden').where('orden=1 or orden=3').each do 
 
 
 
+
+
+
      sheet.add_row [ @conta, emple.ape_pat, emple.ape_mat, emple.nombres,
      " "+emple.dni,vecivil,vafp,vfing,emple.grado,emple.direccion,emple.distrito,
      emple.telefono,emple.correo,varea,emple.cargo, emple.remuneracion,vniv1,
      vfnac,vfter,vfun1,vfun2,vfun3,vfun4,vfun5,vfun6,vfun7,vfun8,vfun9,
-     vstud1,vstud2,vstud3],
+     vstud1,vstud2,vstud3, vexpe1,vexpe2,vexpe3],
      style: [centra, izq,izq, izq,centra,centra,centra,centra,izq,izq,izq,centra,
      izq,izq,  izq,soles,izq,centra,centra,desc,desc,desc,desc,desc,desc,desc,
-     desc,desc,desc,desc,desc], :height => 27
+     desc,desc,desc,desc,desc,desc,desc,desc], :height => 27
 
 
 
@@ -315,7 +344,8 @@ Formula.where(product_id:23).order('orden').where('orden=1 or orden=3').each do 
 
 
   sheet.column_widths *[5,20,20,30,10,15,15,15,50,50,30,20,40,40,
-                   45,15,20,15,20,30,30,30,30,30,30,30,30,30,40,40,40]
+                   45,15,20,15,20,30,30,30,30,30,30,30,30,30,
+                   40,40,40,40,40,40]
   end
  end
   ######################
