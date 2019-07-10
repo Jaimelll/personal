@@ -1,9 +1,17 @@
 class AgreementsController < InheritedResources::Base
 
-  private
+  #ver nulo
+def ver_nulstr(vver)
+  
+    if vver  then
+       vvar=vver.to_s
+     else
+       vvar=" "
+     end
 
-    def agreement_params
-      params.require(:agreement).permit(:employee_id, :puesto, :admin_user_id)
-    end
+  return vvar
+ end
+#fin nulo
+
 end
 

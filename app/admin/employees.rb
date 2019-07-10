@@ -375,6 +375,7 @@ end
                       end
 
    sidebar "Foto", except: :index  do
+             connulo = AgreementsController.new  
              vempl1=Employee.where(correo_corp:current_admin_user.email.strip).select('id as dd').first.dd.to_s
              vempl2=params[:id]
              if current_admin_user.categoria==3 or current_admin_user.categoria==2 or vempl1==vempl2 then
@@ -410,9 +411,9 @@ Agreement.where(employee_id:params[:id]).each do |contr|
 if   contr.fec_inicon and contr.fec_tercon then
 if contr.fec_inicon<=Time.now and  contr.fec_tercon>=Time.now  then
   ul do
-     li "Inicio de contrato: "+contr.fec_inicon.to_s
-     li "Fin de contrato: "+contr. fec_tercon.to_s
-     li "Puesto:  "+contr.puesto
+     li "Inicio de contrato: "+connulo.ver_nulstr(contr.fec_inicon)
+     li "Fin de contrato: "+connulo.ver_nulstr(contr. fec_tercon)
+     li "Puesto:  "+connulo.ver_nulstr(contr. puesto)
      li "Estado: ACTIVO"
      li "Ingreso: "+Agreement.where(employee_id:params[:id],
          tipo_contra:contr.tipo_contra).minimum('fec_inicon').to_s
