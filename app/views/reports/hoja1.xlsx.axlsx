@@ -436,8 +436,8 @@ if svet>0 then
   when "4"
   ###############
 
-Formula.where(product_id:23).order('orden').where('orden=1').each do |tipotrab|
-  wb.add_worksheet(name: "CAS") do |sheet|
+Formula.where(product_id:23).order('orden').where('orden=1 or orden=3').each do |tipotrab|
+  wb.add_worksheet(name: tipotrab.nombre) do |sheet|
 
     sheet.add_row []
 
@@ -525,7 +525,7 @@ Formula.where(product_id:23).order('orden').where('orden=1').each do |tipotrab|
 
 
   sheet.column_widths *[5,40,15,15,30,
-                   30,30,20,15,20,20]
+                   30,30,15,15,15,15]
   end
  end
 
