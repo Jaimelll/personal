@@ -173,8 +173,16 @@ end
             emple.cargo
           end
 
-          column("Perfil") do |emple|
-            emple.grado
+
+          column("Categoría") do |emple|
+            if emple.sele and emple.sele>0 then
+
+               Formula.where(product_id:10000, orden:emple.sele).
+                                select('nombre as dd').first.dd
+
+
+              end
+
           end
 
           if current_admin_user.categoria==2 or current_admin_user.categoria==3  then
@@ -236,7 +244,7 @@ end
          f.input :fec_nacimiento, :label => 'Fecha de nacimiento' , as: :datepicker, :input_html => { :style =>  'width:30%'}
          f.input :esta_civil, :as => :select, :collection =>
             Formula.where(product_id:24).order('nombre').map{|u| [u.nombre, u.orden]}
-         f.input :sele,:label => 'Nivel', :as => :select, :collection =>
+         f.input :sele,:label => 'Categoría', :as => :select, :collection =>
             Formula.where(product_id:10000).order('nombre').map{|u| [u.nombre, u.orden]}
          f.input :remuneracion,:as =>:string, :input_html => { :style =>  'width:30%'}
          f.input :fec_inicon, :label => 'Fecha de ingreso' , as: :datepicker, :input_html => { :style =>  'width:30%'}
@@ -345,7 +353,7 @@ end
                            end
              end
              if current_admin_user.categoria==3 or current_admin_user.categoria==2 then
-             row 'Nivel' do |emple|
+             row 'Categoría' do |emple|
                if emple.sele and emple.sele>0 then
 
                   Formula.where(product_id:10000, orden:emple.sele).

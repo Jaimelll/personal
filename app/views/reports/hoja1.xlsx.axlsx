@@ -33,7 +33,7 @@ izq1 = style.add_style( border: Axlsx::STYLE_THIN_BORDER,sz: 10,:bg_color => "BD
                                 alignment: { horizontal: :left })                                
 
 desc = style.add_style( border: Axlsx::STYLE_THIN_BORDER,
-                              alignment: { horizontal: :left ,vertical: :center, wrap_text: :true},sz: 7)
+                              alignment: { horizontal: :left ,vertical: :center, wrap_text: :true},sz: 9)
 
 desca = style.add_style( border: Axlsx::STYLE_THIN_BORDER,
                               alignment: { horizontal: :left ,vertical: :center, wrap_text: :true},sz: 8)
@@ -432,7 +432,102 @@ if svet>0 then
   end
 
   ######################
+######################
+  when "4"
+  ###############
 
+Formula.where(product_id:23).order('orden').where('orden=1').each do |tipotrab|
+  wb.add_worksheet(name: "CAS") do |sheet|
+
+    sheet.add_row []
+
+    sheet.add_row %w(N APELLIDO_NOMBRE INGRESO TERM_CONTRATO PROFESIÓN 
+    CARGO AREA REMUNERACIÓN CATEGORÍA MÍNIMO MÁXIMO ),
+    style: [titu, titu, titu, titu, titu, titu, 
+            titu, titu, titu, titu, titu]
+
+   @conta=0
+
+
+   Employee.where(estado:1,tip_tra:tipotrab.orden).order('sele').each do |emple|
+   @conta=@conta+1
+
+    varea1=Formula.where(product_id:26,orden:emple.area)
+    if varea1.count>0 then
+        varea=varea1.select('descripcion as dd').first.dd
+    else
+        varea="s/d"
+    end
+
+    vecivil1=Formula.where(product_id:24,orden:emple.esta_civil)
+    if vecivil1.count>0 then
+        vecivil=vecivil1.select('nombre as dd').first.dd
+    else
+        vecivil="s/d"
+    end
+
+    vafp1=Formula.where(product_id:30,orden:emple.afp)
+    if vafp1.count>0 then
+        vafp=vafp1.select('nombre as dd').first.dd
+    else
+        vafp="s/d"
+    end
+    if emple.fec_inicon then
+       vfing=emple.fec_inicon.strftime("%d-%m-%Y")
+    else
+       vfing="s/d"
+    end
+
+    if emple.fec_nacimiento then
+       vfnac=emple.fec_nacimiento.strftime("%d-%m-%Y")
+    else
+       vfnac="s/d"
+    end
+
+    if emple.fec_tercon then
+       vfter=emple.fec_tercon.strftime("%d-%m-%Y")
+    else
+       vfter="s/d"
+    end
+      vniv=Formula.where(product_id:10000,orden:emple.sele)
+
+    if vniv.count>0 then
+        vniv1=vniv.select('nombre as dd').first.dd
+        vniv2=vniv.select('numero as dd').first.dd
+        vniv3=vniv.select('acti as dd').first.dd
+    else
+        vniv1="s/d"
+        vniv2=" "
+        vniv3=" "
+    end
+
+
+
+
+
+
+
+
+
+
+
+     sheet.add_row [ @conta, emple.ape_nom.split.map(&:capitalize)*' ',
+     vfing,vfter,emple.grado,emple.cargo,varea, emple.remuneracion,
+     vniv1,vniv2,vniv3],
+     style: [centra, izq,centra,centra,
+     desc,desc,  desc,soles,desc,soles,soles], :height => 27
+
+
+
+
+
+  end
+
+
+  sheet.column_widths *[5,40,15,15,30,
+                   30,30,20,15,20,20]
+  end
+ end
 
   end #de case
 end

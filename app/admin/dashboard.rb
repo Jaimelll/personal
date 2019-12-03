@@ -14,6 +14,8 @@ ActiveAdmin.register_page "Dashboard" do
         li  link_to "Relacion de Personal CAS-Militar ACTIVO", reports_vhoja1_path(format:  "xlsx", :param1=> 2)
         br
         li  link_to "Funciones", reports_vhoja1_path(format:  "xlsx", :param1=> 3)
+        br
+        li  link_to "Categorías", reports_vhoja1_path(format:  "xlsx", :param1=> 4)
       end
 
     # Here is an example of a simple dashboard with columns and panels.
