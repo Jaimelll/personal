@@ -526,7 +526,9 @@ Formula.where(product_id:23).order('orden').where('orden=1 or orden=3').each do 
 
   sheet.column_widths *[5,40,15,15,30,
                    30,30,15,15,15,15]
+sheet.sheet_view.zoom_scale = 72
   end
+
  end
 
   end #de case
